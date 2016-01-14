@@ -1,18 +1,25 @@
 package fil.iagl.idl.bouncingballs
 
-class BouncingBall(position: Position, environment: Environment) extends Agent(position, environment) {
+/**
+  * A bouncing ball is an agent which is a ball that can bounce.
+  * @param position the coordinates of the agent in its surrounding environment
+  */
+class BouncingBall(position: Position) extends Agent(position) {
 
-  override def doIt() : Unit = {
+  override def doIt(environment: Environment) : Unit = {
     // TODO
     println("doIt()")
   }
 
 }
 
+/**
+  * Companion object
+  */
 object BouncingBall {
 
-  def apply(posX: Int, posY: Int, environment: Environment): Unit = {
-    new BouncingBall(posX, posY, environment)
+  def apply(position: Position): Unit = {
+    new BouncingBall(position)
   }
 
 }

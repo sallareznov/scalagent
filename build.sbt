@@ -5,3 +5,4 @@ scalaVersion := "2.11.7"
 mainClass in assembly := Some("fil.iagl.idl.bouncingballs.Main")
 assemblyJarName in assembly := "bouncing-balls.jar"
 libraryDependencies += "com.lihaoyi" %% "scalarx" % "0.2.8"
+libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.60-R9"
