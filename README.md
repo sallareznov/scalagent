@@ -1,2 +1,2 @@
 # bouncing-balls
-Simulation of bouncing balls using a multi-agent approach
+Bouncing balls simulation using a multi-agent approach
