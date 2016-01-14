@@ -1,2 +1,2 @@
-# bouncing-balls
-Bouncing balls simulation using a multi-agent approach
+# magentscala
+Behaviour simulation, Multi-agent system approach using Scala/FX

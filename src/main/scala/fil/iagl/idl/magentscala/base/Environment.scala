@@ -1,4 +1,4 @@
-package fil.iagl.idl.bouncingballs
+package fil.iagl.idl.magentscala.base
 
 /**
   * The environment.

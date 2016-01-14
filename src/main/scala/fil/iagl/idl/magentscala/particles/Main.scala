@@ -1,4 +1,4 @@
-package fil.iagl.idl.bouncingballs
+package fil.iagl.idl.magentscala.particles
 
 import scalafx.Includes._
 import scalafx.application.JFXApp

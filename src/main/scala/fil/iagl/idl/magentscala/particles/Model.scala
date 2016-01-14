@@ -1,12 +1,14 @@
-package fil.iagl.idl.bouncingballs
+package fil.iagl.idl.magentscala.particles
 
 import java.util.Observable
+
+import fil.iagl.idl.magentscala.base.{Environment, Agent}
 
 import scala.util.Random
 
 /**
   * The model, referencing the environment and the agents inside. The model is the
-  * [[java.util.Observable]] of a [[fil.iagl.idl.bouncingballs.View]]; therefore,
+  * [[java.util.Observable]] of a [[fil.iagl.idl.magentscala.particles.View]]; therefore,
   * the latter can update itself after a lap (a lap is completed when all agents have computed
   * their next move).
   * @param environment the environment

@@ -1,4 +1,6 @@
-package fil.iagl.idl.bouncingballs
+package fil.iagl.idl.magentscala.base
+
+import Position
 
 /**
   * An agent is an entity capable of acting in an environment [[fil.iagl.idl.bouncingballs.Environment]]
