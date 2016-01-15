@@ -1,8 +1,6 @@
-package fil.iagl.idl.magentscala.particles
+package fil.iagl.idl.scalagent.particles
 
 import java.util.{Observable, Observer}
-
-import fil.iagl.idl.magentscala.particles.Model
 
 /**
   * The view is the interface rendered to the user. The view will represent

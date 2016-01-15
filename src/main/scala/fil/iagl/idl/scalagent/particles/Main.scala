@@ -1,4 +1,4 @@
-package fil.iagl.idl.magentscala.particles
+package fil.iagl.idl.scalagent.particles
 
 import scalafx.Includes._
 import scalafx.application.JFXApp
@@ -6,9 +6,6 @@ import scalafx.scene.Scene
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-/**
-  * Main companion object
-  */
 object Main extends JFXApp {
 
   stage = new JFXApp.PrimaryStage {

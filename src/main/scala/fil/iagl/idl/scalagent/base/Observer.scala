@@ -1,4 +1,4 @@
-package fil.iagl.idl.magentscala.base
+package fil.iagl.idl.scalagent.base
 
 trait Observer {
 

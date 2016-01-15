@@ -1,10 +1,10 @@
-package fil.iagl.idl.magentscala.base
+package fil.iagl.idl.scalagent.base
 
 /**
   * The environment.
   * @param takenCells the states of each cell (taken or free) in the environment
   */
-class Environment(val takenCells: Array[Boolean][Boolean]) {
+class Environment(val takenCells: Array[Array[Boolean]]) {
 
 
 
