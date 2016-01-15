@@ -14,6 +14,6 @@ abstract class Agent(var position: Position) {
     * Performs an action, depending on the environment (mainly the position of other agents)
     * @param environment the environment
     */
-  def doIt(environment: Environment) : Unit
+  def doIt(environment: Environment): Unit
 
 }

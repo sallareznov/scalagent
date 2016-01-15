@@ -11,7 +11,7 @@ import fil.iagl.idl.scalagent.base.{Position, Environment, Agent}
   */
 class Particle(position: Position) extends Agent(position) {
 
-  override def doIt(environment: Environment) : Unit = {
+  override def doIt(environment: Environment): Unit = {
     // TODO
     println("doIt()")
   }
