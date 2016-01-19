@@ -1,6 +1,6 @@
 package fil.iagl.idl.scalagent.particles
 
-import java.util.{Observable, Observer}
+import fil.iagl.idl.scalagent.base.Observer
 
 /**
   * The view is the interface rendered to the user. The view will represent
@@ -9,8 +9,6 @@ import java.util.{Observable, Observer}
   */
 class View extends Observer {
 
-  override def update(o: Observable, arg: Any): Unit = {
-
-  }
+  override def update(): Unit = println("update()")
 
 }

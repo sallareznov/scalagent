@@ -5,4 +5,8 @@ package fil.iagl.idl.scalagent.base
   * @param x the abscissa
   * @param y the ordinate
   */
-case class Position(x: Int, y: Int) {}
+case class Position(x: Int, y: Int) {
+
+  override def toString = "(" + x + ", " + y + ")"
+
+}

@@ -1,5 +1,7 @@
 package fil.iagl.idl.scalagent.base
 
+import scala.util.Random
+
 /**
   * An agent is an entity capable of acting in an environment [[fil.iagl.idl.scalagent.base.Environment]]
   * and communicating with other agents.
@@ -7,8 +9,8 @@ package fil.iagl.idl.scalagent.base
   */
 abstract class Agent(var position: Position) {
 
-  var stepX = 0
-  var stepY = 0
+  var stepX = Random.nextInt(2)
+  var stepY = Random.nextInt(2)
 
   /**
     * Performs an action, depending on the environment (mainly the position of other agents)

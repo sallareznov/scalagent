@@ -1,12 +1,19 @@
 package fil.iagl.idl.scalagent.particles
 
+import fil.iagl.idl.scalagent.base.Observer
+import fil.iagl.idl.scalagent.particles.Test._
+
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.scene.Scene
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-object Main extends JFXApp {
+object Main extends JFXApp with Observer {
+
+  Main.main(Array(""))
+  val commandWithHandling = new ParticlesMainCommand()
+  commandWithHandling.handleCommand(args)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Hello Stage"
@@ -24,4 +31,5 @@ object Main extends JFXApp {
     }
   }
 
+  override def update(): Unit = println("update()")
 }

@@ -23,8 +23,6 @@ class Particle(position: Position) extends Agent(position) {
   */
 object Particle {
 
-  def apply(position: Position): Unit = {
-    new Particle(position)
-  }
+  def apply(position: Position) = new Particle(position)
 
 }
