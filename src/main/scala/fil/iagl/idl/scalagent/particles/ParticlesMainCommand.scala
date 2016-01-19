@@ -18,6 +18,7 @@ class ParticlesMainCommand() extends CommandWithHandling(description = "simulate
     Cli.parse(args).withCommand(ParticlesMainCommand.this) {
       case opt => {
         val model = Model(nbParticles, envSize, agentSize, speed, toroidal, visibility, equity)
+        model.addObserver(Main)
         model.run(50)
       }
     }
