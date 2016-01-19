@@ -2,7 +2,7 @@ name := "scalagent"
 version := "1.0"
 organization := "fil.iagl.idl.scalagent"
 scalaVersion := "2.11.7"
-mainClass in assembly := Some("fil.iagl.idl.scalagent.particles.Main")
+mainClass in assembly := Some("fil.iagl.idl.scalagent.particles.View")
 assemblyJarName in assembly := "scalagent.jar"
 
 libraryDependencies ++= Seq(

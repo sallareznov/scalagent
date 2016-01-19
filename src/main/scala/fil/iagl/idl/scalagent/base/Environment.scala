@@ -3,9 +3,13 @@ package fil.iagl.idl.scalagent.base
 /**
   * The environment.
   */
-class Environment(size: Int) {
+class Environment(val size: Int) {
 
   val takenCells = Array.ofDim[Boolean](size, size)
+
+  def mark(position: Position): Unit = (takenCells(position.x)(position.y) = true)
+
+  def unmark(position: Position): Unit = (takenCells(position.x)(position.y) = false)
 
 }
 

@@ -7,7 +7,7 @@ import scala.util.Random
   * and communicating with other agents.
   * @param position the coordinates of the agent in its surrounding environment
   */
-abstract class Agent(var position: Position) {
+abstract class Agent(val position: Position, val toroidal: Boolean) {
 
   var stepX = Random.nextInt(2)
   var stepY = Random.nextInt(2)
@@ -16,6 +16,8 @@ abstract class Agent(var position: Position) {
     * Performs an action, depending on the environment (mainly the position of other agents)
     * @param environment the environment
     */
-  def doIt(environment: Environment): Unit
+  def doIt(environment: Environment): Position
+
+  def getNextPosition(environment: Environment): Position
 
 }

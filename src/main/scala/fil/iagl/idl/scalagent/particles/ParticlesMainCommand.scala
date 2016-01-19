@@ -17,8 +17,11 @@ class ParticlesMainCommand() extends CommandWithHandling(description = "simulate
   override def handleCommand(args: Array[String]) {
     Cli.parse(args).withCommand(ParticlesMainCommand.this) {
       case opt => {
-        val model = Model(nbParticles, envSize, agentSize, speed, toroidal, visibility, equity)
-        model.addObserver(Main)
+        val model = Model(nbParticles, envSize, speed, toroidal, equity)
+        View.setAgentSize(agentSize)
+        View.setEnvSize(envSize)
+        View.setVisibility(visibility)
+        model.addObserver(View)
         model.run(50)
       }
     }
