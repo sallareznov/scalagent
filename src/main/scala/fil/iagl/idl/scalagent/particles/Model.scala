@@ -11,6 +11,7 @@ import scala.util.Random
   */
 class Model(val nbParticles: Int,
             val envSize: Int,
+            val agentSize: Int,
             val speed: Int,
             val toroidal: Boolean,
             val equity: Boolean
@@ -51,8 +52,9 @@ object Model {
 
   def apply(nbParticles: Int,
             envSize: Int,
+            agentSize: Int,
             speed: Int,
             toroidal: Boolean,
-            equity: Boolean) = new Model(nbParticles, envSize, speed, toroidal, equity)
+            equity: Boolean) = new Model(nbParticles, envSize, agentSize, speed, toroidal, equity)
 
 }

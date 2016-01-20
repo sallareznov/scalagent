@@ -12,13 +12,17 @@ abstract class Agent(val position: Position, val toroidal: Boolean) {
 
   val choices = List(-1, 0, 1)
 
-  var stepX = 0
-  var stepY = 0
+  var stepX = 1
+  var stepY = 1
 
-  do {
+  def getADirection(): Unit = {
     stepX = choices(Random.nextInt(3))
     stepY = choices(Random.nextInt(3))
-  } while (!(stepX == 0 && stepY == 0))
+    do {
+      stepX = choices(Random.nextInt(3))
+      stepY = choices(Random.nextInt(3))
+    } while (stepX == 0 && stepY == 0)
+  }
 
   /**
     * Performs an action, depending on the environment (mainly the position of other agents)

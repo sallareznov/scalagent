@@ -4,10 +4,9 @@ object Main extends App {
 
   val command = new ParticlesMainCommand()
   command.handleCommand(args)
-  command.handleCommand(args)
-  val model = Model(command.nbParticles, command.envSize, command.speed, command.toroidal, command.equity)
-  val view = new View()
+  val model = Model(command.nbParticles, command.envSize, command.agentSize, command.speed, command.toroidal, command.equity)
+  val view = new ViewSwing(command.envSize, command.agentSize)
   model.addObserver(view)
-  view.test()
   model.run()
+
 }

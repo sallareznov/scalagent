@@ -19,12 +19,18 @@ class Particle(position: Position, toroidal: Boolean) extends Agent(position, to
     println("doIt()")
     val newPosition = getNextPosition(environment)
     if (positionIsEmpty(newPosition, environment)) {
+    //  println("newPosition : " + newPosition)
       newPosition
-    } else
-      changeDirection(newPosition, environment)
+    } else {
+      val pos = changeDirection(newPosition, environment)
+    //  println("newPosition : " + pos)
+      pos
+    }
   }
 
   override def getNextPosition(environment: Environment): Position = {
+  /*  println("stepX : " + stepX)
+    println("stepY : " + stepY) */
     if (toroidal) {
       val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.size
       val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.size
