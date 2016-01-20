@@ -31,20 +31,18 @@ class Model(val nbParticles: Int,
 
   /**
     * runs the model (simulates the agents' moves)
-    * @param nbOfLaps the number of laps to be completed
     */
-  def run(nbOfLaps: Int): Unit = {
-    println(agents)
-    agents.foreach(agent => {
-      val agentOldPosition = agent.position
-      println("before : " + agent.position)
-      agent.doIt(environment)
-      environment.unmark(agentOldPosition)
-      environment.mark(agent.position)
-      println("after : " + agent.position)
-    })
-    notifyObservers(environment.takenCells)
-    Thread.sleep(speed)
+  def run(): Unit = {
+    while (true) {
+      agents.foreach(agent => {
+        val agentOldPosition = agent.position
+        agent.doIt(environment)
+        environment.unmark(agentOldPosition)
+        environment.mark(agent.position)
+      })
+      notifyObservers(environment.takenCells)
+      Thread.sleep(speed)
+    }
   }
 
 }

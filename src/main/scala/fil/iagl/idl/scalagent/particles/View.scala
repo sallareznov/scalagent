@@ -3,74 +3,54 @@ package fil.iagl.idl.scalagent.particles
 import fil.iagl.idl.scalagent.base.Observer
 
 import scalafx.application.JFXApp
+import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import scalafx.scene.layout.GridPane
+import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-object View extends JFXApp with Observer {
-
-  /*override def start(stage: javafx.stage.Stage): Unit = {
-    stage.setTitle("Particles")
-    stage.setWidth(envSize)
-    stage.setHeight(envSize)
-    stage.setScene(new Scene {
-      content = mainContainer
-      mainContainer.setMinSize(envSize, envSize)
-    })
-    JFXApp.STAGE = stage
-    if (JFXApp.AUTO_SHOW) {
-      JFXApp.STAGE.show()
-    }
-  }*/
-
-  println("Constructor call")
+ class View extends JFXApp with Observer {
 
   var mainContainer = new GridPane()
-  println(s"mainContainer = ${mainContainer}")
-  var envSize = 0
-  var agentSize = 0
   var visibility = false
+  var command = new ParticlesMainCommand()
 
-  stage = new JFXApp.PrimaryStage {
-    title.value = "Particles"
-    width = envSize
-    height = envSize
-    scene = new Scene {
-      root = mainContainer
-      mainContainer.setMinSize(envSize, envSize)
-    }
-  }
+  def test(): Unit = {
+    stage = new PrimaryStage {
+      title.value = "Particles"
+      mainContainer.prefWidth = command.envSize * command.agentSize
+      mainContainer.prefHeight = command.envSize * command.agentSize
+      scene = new Scene {
+        root = mainContainer
+        val cons1 = new RowConstraints()
+        cons1.vgrow = Priority.Never
 
-  println(s"mainContainer = ${mainContainer}")
+        val cons2 = new RowConstraints()
+        cons2.vgrow = Priority.Always
 
-  val commandWithHandling = new ParticlesMainCommand()
-  commandWithHandling.handleCommand(Array("--equity"))
-
-  override def update(takenCells: Array[Array[Boolean]]): Unit = {
-    println(mainContainer)
-    mainContainer.children.clear()
-    for (i <- 0 until takenCells.length) {
-      for (j <- 0 until takenCells(0).length) {
-        if (takenCells(i)(j)) {
-          val particle = new Rectangle {
-            width = agentSize
-            height = agentSize
-            x = i
-            y = j
-            fill = Color.Red
-          }
-          mainContainer.add(particle, i, j)
-
-        }
+        mainContainer.rowConstraints.addAll(cons1, cons2)
       }
     }
   }
 
-  def setEnvSize(envSize: Int): Unit = (this.envSize = envSize)
 
-  def setAgentSize(agentSize: Int): Unit = (this.agentSize = agentSize)
 
-  def setVisibility(visibility: Boolean): Unit = (this.visibility = visibility)
+  override def update(takenCells: Array[Array[Boolean]]): Unit = {
+    println("mainContainer : " + mainContainer)
+    mainContainer.children.clear()
+    for (i <- takenCells.indices) {
+      for (j <- takenCells.indices) {
+        val particle = new Rectangle {
+          width = command.agentSize
+          height = command.agentSize
+          x = i
+          y = j
+          fill = if (takenCells(i)(j)) Color.Red else Color.White
+        }
+        mainContainer.add(particle, i, j)
+      }
+    }
+  }
 
 }
+
