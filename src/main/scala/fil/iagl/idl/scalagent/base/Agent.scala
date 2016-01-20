@@ -6,14 +6,14 @@ import scala.util.Random
   * An agent is an entity capable of acting in an environment [[fil.iagl.idl.scalagent.base.Environment]]
   * and communicating with other agents.
   *
-  * @param position the coordinates of the agent in its surrounding environment
   */
-abstract class Agent(val position: Position, val toroidal: Boolean) {
+trait Agent {
 
+  var position = Position(0, 0)
   val choices = List(-1, 0, 1)
-
-  var stepX = 1
-  var stepY = 1
+  var stepX = 0
+  var stepY = 0
+  getADirection()
 
   def getADirection(): Unit = {
     stepX = choices(Random.nextInt(3))
@@ -29,7 +29,7 @@ abstract class Agent(val position: Position, val toroidal: Boolean) {
     *
     * @param environment the environment
     */
-  def doIt(environment: Environment): Position
+  def doIt(environment: Environment): Unit
 
   def getNextPosition(environment: Environment): Position
 

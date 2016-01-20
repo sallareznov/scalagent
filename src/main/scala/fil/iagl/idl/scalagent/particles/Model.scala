@@ -21,7 +21,8 @@ class Model(val nbParticles: Int,
 
   var agents = new Array[Agent](nbParticles)
   for (i <- 0 until agents.length) {
-    agents(i) = Particle(Position(Random.nextInt(envSize), Random.nextInt(envSize)), toroidal)
+    agents(i) = Particle(toroidal)
+    agents(i).position = Position(Random.nextInt(envSize), Random.nextInt(envSize))
     // TODO check equality
     val agentPosition = agents(i).position
     environment.mark(agentPosition)

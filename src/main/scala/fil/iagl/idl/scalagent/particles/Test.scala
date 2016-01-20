@@ -20,13 +20,13 @@ object Test extends JFXApp {
     mainContainer.prefHeight = 1000
     scene = new Scene {
       root = mainContainer
-      val cons1 = new RowConstraints()
+      val cons1 = new RowConstraints
       cons1.setVgrow(Priority.NEVER)
 
-      val cons2 = new RowConstraints()
+      val cons2 = new RowConstraints
       cons2.setVgrow(Priority.ALWAYS)
 
-      mainContainer.getRowConstraints().addAll(cons1, cons2)
+      mainContainer.getRowConstraints.addAll(cons1, cons2)
 
       val label = Label("Name:")
       val field = new TextField()

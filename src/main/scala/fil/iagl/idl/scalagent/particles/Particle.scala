@@ -10,27 +10,20 @@ import scala.util.Random
   * (the eight surrounding cells in the environment) if the cell is free. Otherwise
   * (i.e. the cell is already taken by another ball), the agent moves back to the opposite direction.
   *
-  * @param position the coordinates of the agent in its surrounding environment
   */
-class Particle(position: Position, toroidal: Boolean) extends Agent(position, toroidal) {
+class Particle(val toroidal: Boolean) extends Agent {
 
-
-  override def doIt(environment: Environment): Position = {
+  override def doIt(environment: Environment): Unit = {
     println("doIt()")
     val newPosition = getNextPosition(environment)
     if (positionIsEmpty(newPosition, environment)) {
-    //  println("newPosition : " + newPosition)
-      newPosition
+      position = newPosition
     } else {
-      val pos = changeDirection(newPosition, environment)
-    //  println("newPosition : " + pos)
-      pos
+      position = changeDirection(newPosition, environment)
     }
   }
 
   override def getNextPosition(environment: Environment): Position = {
-  /*  println("stepX : " + stepX)
-    println("stepY : " + stepY) */
     if (toroidal) {
       val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.size
       val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.size
@@ -53,7 +46,7 @@ class Particle(position: Position, toroidal: Boolean) extends Agent(position, to
     }
   }
 
-  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = environment.takenCells(newPosition.x)(newPosition.y)
+  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = !environment.takenCells(newPosition.x)(newPosition.y)
 
   def changeDirection(position: Position, environment: Environment): Position = {
     var newPosition = position
@@ -78,10 +71,10 @@ class Particle(position: Position, toroidal: Boolean) extends Agent(position, to
 }
 
 /**
-  * Object companion
+  * Companion object
   */
 object Particle {
 
-  def apply(position: Position, toroidal: Boolean) = new Particle(position, toroidal)
+  def apply(toroidal: Boolean) = new Particle(toroidal)
 
 }

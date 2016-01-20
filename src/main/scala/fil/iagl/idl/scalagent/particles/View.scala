@@ -13,9 +13,9 @@ import scalafx.scene.shape.Rectangle
 class View(model: Model) extends Application with Observer {
 
   model.addObserver(this)
-  var mainContainer = new GridPane()
+  var mainContainer = new GridPane
   var visibility = false
-  var command = new ParticlesMainCommand()
+  var command = new ParticlesMainCommand
 
   def this() {
     this(View.defaultModel())
@@ -26,10 +26,10 @@ class View(model: Model) extends Application with Observer {
     stage.setTitle("Particles")
     mainContainer.prefWidth = command.envSize * command.agentSize
     mainContainer.prefHeight = command.envSize * command.agentSize
-    val cons1 = new RowConstraints()
+    val cons1 = new RowConstraints
     cons1.vgrow = Priority.Never
 
-    val cons2 = new RowConstraints()
+    val cons2 = new RowConstraints
     cons2.vgrow = Priority.Always
 
     mainContainer.rowConstraints.addAll(cons1, cons2)
@@ -60,7 +60,7 @@ object View {
 
 
   def defaultModel(): Model = {
-    val command = new ParticlesMainCommand()
+    val command = new ParticlesMainCommand
     command.handleCommand(Array())
     Model(command.nbParticles, command.envSize, command.agentSize, command.speed, command.toroidal, command.equity)
   }
@@ -73,7 +73,7 @@ object View {
         Application.launch(classOf[View], args: _*)
       }
     }.start
-    defaultModel().run()
+    defaultModel.run
   }
 
 }
