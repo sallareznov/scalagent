@@ -1,5 +1,9 @@
 package fil.iagl.idl.scalagent.particles
 
+import java.util
+import javafx.collections.ObservableList
+import javafx.scene.shape.Circle
+
 import fil.iagl.idl.scalagent.base.{Observable, Position, Environment, Agent}
 
 import scala.util.Random
@@ -35,7 +39,7 @@ class Model(val nbParticles: Int,
   /**
     * runs the model (simulates the agents' moves)
     */
-  def run(): Unit = {
+  def run(circles: ObservableList[Circle]): Unit = {
     agents.foreach(agent => {
       val agentOldPosition = agent.position
       agent.doIt(environment)

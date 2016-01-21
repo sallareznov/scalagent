@@ -19,8 +19,7 @@ import scala.collection.JavaConverters._
 class View extends Application with Observer {
 
   val canvas = new Pane()
-  val circles = new util.ArrayList[Circle]()
-  var circlesObs: Option[ObservableList[Circle]] = None
+  var circles: Option[ObservableList[Circle]] = None
 
   override def start(primaryStage: Stage): Unit = {
     val command = new ParticlesMainCommand()
@@ -32,12 +31,13 @@ class View extends Application with Observer {
     primaryStage.show()
     val circle = new Circle(2.5, Color.RED)
     circle.relocate(200, 200)
-    circles.add(circle)
-    circlesObs = Some(FXCollections.observableArrayList(circles))
-    canvas.getChildren.addAll(circlesObs.get)
+    circles = Some(FXCollections.observableArrayList(new util.ArrayList[Circle]()))
+    circles.get.add(circle)
+    canvas.getChildren.addAll(circles.get)
     var (x, y) = (200, 200)
     val timelineLoop = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler[ActionEvent]() {
       def handle(actionEvent: ActionEvent): Unit = {
+        model.run(circles.get)
         circle.relocate(x, y)
         x += 1
         y += 1
