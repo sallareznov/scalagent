@@ -14,13 +14,13 @@ import scala.util.Random
 class Particle(val toroidal: Boolean) extends Agent {
 
   override def doIt(environment: Environment): Unit = {
-    println("doIt()")
     val newPosition = getNextPosition(environment)
     if (positionIsEmpty(newPosition, environment)) {
       position = newPosition
     } else {
       position = changeDirection(newPosition, environment)
     }
+    shape.get.relocate(position.x, position.y)
   }
 
   override def getNextPosition(environment: Environment): Position = {

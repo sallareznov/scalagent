@@ -7,40 +7,35 @@ import javafx.collections.{FXCollections, ObservableList}
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
-import javafx.scene.paint.Color
-import javafx.scene.shape.Circle
-import javafx.stage.Stage
+import javafx.scene.shape.{Circle, Shape}
+import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 
 import fil.iagl.idl.scalagent.base.{Agent, Observer}
 
 import scala.collection.JavaConverters._
 
-class View extends Application with Observer {
+class ParticlesView extends Application with Observer {
 
   val canvas = new Pane()
-  var circles: Option[ObservableList[Circle]] = None
+  var circles: Option[ObservableList[Shape]] = None
 
   override def start(primaryStage: Stage): Unit = {
     val command = new ParticlesMainCommand()
     command.handleCommand(getParameters.getRaw().asScala.toList.toArray)
-    val model = new Model(command.nbParticles, command.envSize, command.agentSize, command.speed, command.toroidal, command.equity)
+    val primScreenBounds = Screen.getPrimary.getVisualBounds
+    val model = new ParticlesModel(command.nbParticles, command.envSize, command.agentSize, command.speed, command.toroidal, command.equity)
     primaryStage.setTitle("Particles")
+    // TODO primScreenBounds.getWidth(), primScreenBounds.getHeight()
     val scene = new Scene(canvas, model.envSize, model.envSize)
     primaryStage.setScene(scene)
     primaryStage.show()
-    val circle = new Circle(2.5, Color.RED)
-    circle.relocate(200, 200)
+    val agentsCircles = model.agents.map(agent => agent.shape.get)
     circles = Some(FXCollections.observableArrayList(new util.ArrayList[Circle]()))
-    circles.get.add(circle)
-    canvas.getChildren.addAll(circles.get)
-    var (x, y) = (200, 200)
-    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler[ActionEvent]() {
+    agentsCircles.foreach(shape => canvas.getChildren.add(shape))
+    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler[ActionEvent]() {
       def handle(actionEvent: ActionEvent): Unit = {
-        model.run(circles.get)
-        circle.relocate(x, y)
-        x += 1
-        y += 1
+        model.run()
       }
     }))
 
@@ -58,10 +53,10 @@ class View extends Application with Observer {
 
 }
 
-object View {
+object ParticlesView {
 
   def main (args: Array[String]) {
-    Application.launch(classOf[View], args: _*)
+    Application.launch(classOf[ParticlesView], args: _*)
   }
 
 }

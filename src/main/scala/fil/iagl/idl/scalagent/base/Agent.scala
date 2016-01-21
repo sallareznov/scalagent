@@ -1,5 +1,7 @@
 package fil.iagl.idl.scalagent.base
 
+import javafx.scene.shape.Shape
+
 import scala.util.Random
 
 /**
@@ -13,6 +15,7 @@ trait Agent {
   val choices = List(-1, 0, 1)
   var stepX = 0
   var stepY = 0
+  var shape: Option[Shape] = None
   getADirection()
 
   def getADirection(): Unit = {
