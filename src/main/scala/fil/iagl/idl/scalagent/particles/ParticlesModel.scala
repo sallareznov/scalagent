@@ -4,7 +4,7 @@ import java.util
 import javafx.collections.ObservableList
 import javafx.scene.shape.Circle
 
-import fil.iagl.idl.scalagent.base._
+import fil.iagl.idl.scalagent.core._
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
@@ -16,29 +16,32 @@ import scala.util.Random
   * their next move).
   */
 class ParticlesModel(val nbParticles: Int,
-                     val envSize: Int,
-                     val agentSize: Int,
+                     val envWidth: Int,
+                     val envHeight: Int,
+                     val agentSize: Double,
                      val speed: Int,
                      val toroidal: Boolean,
                      val equity: Boolean
            ) extends Observable {
 
-  val environment = Environment(envSize)
+  val environment = Environment(envWidth, envHeight)
 
   var agents = new Array[Agent](nbParticles)
-  val alreadyTakenPosition = ListBuffer[Position]()
+  val alreadyTakenPositions = ListBuffer[Position]()
+
   for (i <- agents.indices) {
     agents(i) = Particle(toroidal)
-    agents(i).position = Position(Random.nextInt(envSize), Random.nextInt(envSize))
-    // TODO check position equality (while loop or takeWhile function)
+    //do {
+      agents(i).position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
+    //} while(alreadyTakenPositions.contains(agents(i).position))&& agents(i).position.x == 0 && agents(i).position.y == 0)
+    alreadyTakenPositions += agents(i).position
     val agentPosition = agents(i).position
-    agents(i).shape = Some(new Circle(4, Colors.randomColor()))
+    agents(i).shape = Some(new Circle(agentSize, Colors.randomColor()))
     agents(i).shape.get.relocate(agents(i).position.x, agents(i).position.y)
     environment.mark(agentPosition)
   }
   if (equity)
     agents = Random.shuffle(agents.toList).toArray
-
 
   /**
     * runs the model (simulates the agents' moves)
@@ -58,10 +61,11 @@ class ParticlesModel(val nbParticles: Int,
 object ParticlesModel {
 
   def apply(nbParticles: Int,
-            envSize: Int,
-            agentSize: Int,
+            envWidth: Int,
+            envHeight: Int,
+            agentSize: Double,
             speed: Int,
             toroidal: Boolean,
-            equity: Boolean) = new ParticlesModel(nbParticles, envSize, agentSize, speed, toroidal, equity)
+            equity: Boolean) = new ParticlesModel(nbParticles, envWidth, envHeight, agentSize, speed, toroidal, equity)
 
 }

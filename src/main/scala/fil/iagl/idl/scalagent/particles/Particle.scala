@@ -1,6 +1,6 @@
 package fil.iagl.idl.scalagent.particles
 
-import fil.iagl.idl.scalagent.base.{Position, Environment, Agent}
+import fil.iagl.idl.scalagent.core.{Position, Environment, Agent}
 
 import scala.util.Random
 
@@ -25,20 +25,20 @@ class Particle(val toroidal: Boolean) extends Agent {
 
   override def getNextPosition(environment: Environment): Position = {
     if (toroidal) {
-      val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.size
-      val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.size
-      Position(newX % environment.size, newY % environment.size)
+      val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.width
+      val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.height
+      Position(newX % environment.width, newY % environment.height)
     }
     else {
       var newX = (position.x + stepX)
       var newY = (position.y + stepY)
 
-      if ((newX < 0) || (newX >= environment.size)) {
+      if ((newX < 0) || (newX >= environment.width)) {
         stepX = -stepX
         newX = position.x + stepX
       }
 
-      if ((newY < 0) || (newY >= environment.size)) {
+      if ((newY < 0) || (newY >= environment.height)) {
         stepY = -stepY
         newY = position.y + stepY
       }
