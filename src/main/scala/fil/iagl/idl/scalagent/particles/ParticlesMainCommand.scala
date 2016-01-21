@@ -6,7 +6,7 @@ import org.backuity.clist._
 class ParticlesMainCommand() extends CommandWithHandling(description = "simulates a bubble chamber using a multi-agent approach") {
 
   var nbParticles = opt[Int](name = "nbParticles", default = 1, description = "the number of particles in the room")
-  var envSize = opt[Int](name = "envSize", default = 100, description = "the size of the grid representing the environment")
+  var envSize = opt[Int](name = "envSize", default = 500, description = "the size of the grid representing the environment")
   var agentSize = opt[Int](name = "agentSize", default = 10, description = "the size of the agent (in pixels)")
   var speed = opt[Int](name = "speed", default = 200, description = "the speed of the game (i.e. the number of milliseconds per lap")
   var toroidal = opt[Boolean](name = "toroidal", description = "if activated, the grid will be toroidal")

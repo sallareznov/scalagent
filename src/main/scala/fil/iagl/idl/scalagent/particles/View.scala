@@ -1,79 +1,67 @@
 package fil.iagl.idl.scalagent.particles
 
+import java.util
+import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
+import javafx.collections.{FXCollections, ObservableList}
+import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
+import javafx.scene.layout.Pane
+import javafx.scene.paint.Color
+import javafx.scene.shape.Circle
 import javafx.stage.Stage
+import javafx.util.Duration
 
-import fil.iagl.idl.scalagent.base.Observer
+import fil.iagl.idl.scalagent.base.{Agent, Observer}
 
-import scalafx.scene.layout._
-import scalafx.scene.paint.Color
-import scalafx.scene.shape.Rectangle
+import scala.collection.JavaConverters._
 
-class View(model: Model) extends Application with Observer {
+class View extends Application with Observer {
 
-  model.addObserver(this)
-  var mainContainer = new GridPane
-  var visibility = false
-  var command = new ParticlesMainCommand
+  val canvas = new Pane()
+  val circles = new util.ArrayList[Circle]()
+  var circlesObs: Option[ObservableList[Circle]] = None
 
-  def this() {
-    this(View.defaultModel())
-  }
-
-  override def start(stage: Stage): Unit = {
-    println("START")
-    stage.setTitle("Particles")
-    mainContainer.prefWidth = command.envSize * command.agentSize
-    mainContainer.prefHeight = command.envSize * command.agentSize
-    val cons1 = new RowConstraints
-    cons1.vgrow = Priority.Never
-
-    val cons2 = new RowConstraints
-    cons2.vgrow = Priority.Always
-
-    mainContainer.rowConstraints.addAll(cons1, cons2)
-    stage.setScene(new Scene(mainContainer, 600, 600))
-    stage.show()
-  }
-
-  override def update(takenCells: Array[Array[Boolean]]): Unit = {
-    println("mainContainer : " + mainContainer)
-    mainContainer.children.clear()
-    for (i <- takenCells.indices) {
-      for (j <- takenCells.indices) {
-        val particle = new Rectangle {
-          width = command.agentSize
-          height = command.agentSize
-          x = i
-          y = j
-          fill = if (takenCells(i)(j)) Color.Red else Color.White
-        }
-        mainContainer.add(particle, i, j)
+  override def start(primaryStage: Stage): Unit = {
+    val command = new ParticlesMainCommand()
+    command.handleCommand(getParameters.getRaw().asScala.toList.toArray)
+    val model = new Model(command.nbParticles, command.envSize, command.agentSize, command.speed, command.toroidal, command.equity)
+    primaryStage.setTitle("Particles")
+    val scene = new Scene(canvas, model.envSize, model.envSize)
+    primaryStage.setScene(scene)
+    primaryStage.show()
+    val circle = new Circle(2.5, Color.RED)
+    circle.relocate(200, 200)
+    circles.add(circle)
+    circlesObs = Some(FXCollections.observableArrayList(circles))
+    canvas.getChildren.addAll(circlesObs.get)
+    var (x, y) = (200, 200)
+    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler[ActionEvent]() {
+      def handle(actionEvent: ActionEvent): Unit = {
+        circle.relocate(x, y)
+        x += 1
+        y += 1
       }
-    }
+    }))
+
+    timelineLoop.setCycleCount(-1)
+    timelineLoop.play()
+
+  }
+
+  override def update(agents: Array[Agent]): Unit = {
+
+  }
+
+  def run(): Unit = {
   }
 
 }
 
 object View {
 
-
-  def defaultModel(): Model = {
-    val command = new ParticlesMainCommand
-    command.handleCommand(Array())
-    Model(command.nbParticles, command.envSize, command.agentSize, command.speed, command.toroidal, command.equity)
-  }
-
-  def apply(model: Model) = new View(model)
-
-  def main(args: Array[String]): Unit = {
-    new Thread {
-      override def run(): Unit = {
-        Application.launch(classOf[View], args: _*)
-      }
-    }.start
-    defaultModel.run
+  def main (args: Array[String]) {
+    Application.launch(classOf[View], args: _*)
   }
 
 }

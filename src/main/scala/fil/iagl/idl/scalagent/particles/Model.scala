@@ -1,4 +1,5 @@
 package fil.iagl.idl.scalagent.particles
+
 import fil.iagl.idl.scalagent.base.{Observable, Position, Environment, Agent}
 
 import scala.util.Random
@@ -15,12 +16,12 @@ class Model(val nbParticles: Int,
             val speed: Int,
             val toroidal: Boolean,
             val equity: Boolean
-            ) extends Observable {
+           ) extends Observable {
 
   val environment = Environment(envSize)
 
   var agents = new Array[Agent](nbParticles)
-  for (i <- 0 until agents.length) {
+  for (i <- agents.indices) {
     agents(i) = Particle(toroidal)
     agents(i).position = Position(Random.nextInt(envSize), Random.nextInt(envSize))
     // TODO check equality
@@ -28,23 +29,20 @@ class Model(val nbParticles: Int,
     environment.mark(agentPosition)
   }
   if (equity)
-  agents = Random.shuffle(agents.toList).toArray
+    agents = Random.shuffle(agents.toList).toArray
 
 
   /**
     * runs the model (simulates the agents' moves)
     */
   def run(): Unit = {
-    while (true) {
-      agents.foreach(agent => {
-        val agentOldPosition = agent.position
-        agent.doIt(environment)
-        environment.unmark(agentOldPosition)
-        environment.mark(agent.position)
-      })
-      notifyObservers(environment.takenCells)
-      Thread.sleep(speed)
-    }
+    agents.foreach(agent => {
+      val agentOldPosition = agent.position
+      agent.doIt(environment)
+      environment.unmark(agentOldPosition)
+      environment.mark(agent.position)
+    })
+    notifyObservers(agents)
   }
 
 }

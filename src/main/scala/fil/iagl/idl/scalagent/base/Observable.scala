@@ -8,6 +8,6 @@ abstract class Observable {
 
   def addObserver(observer: Observer): Unit = (observers += observer)
 
-  def notifyObservers(takenCells: Array[Array[Boolean]]): Unit = observers.foreach(_.update(takenCells))
+  def notifyObservers(agents: Array[Agent]): Unit = observers.foreach(_.update(agents))
 
 }
