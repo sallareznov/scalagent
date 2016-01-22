@@ -23,7 +23,7 @@ class Particle(val toroidal: Boolean) extends Agent {
     shape.get.relocate(position.x, position.y)
   }
 
-  override def getNextPosition(environment: Environment): Position = {
+  def getNextPosition(environment: Environment): Position = {
     if (toroidal) {
       val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.width
       val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.height

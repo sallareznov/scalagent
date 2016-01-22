@@ -16,17 +16,18 @@ class ParticlesModel(val nbParticles: Int,
                      val equity: Boolean
                     ) extends Model {
 
-  val environment = Environment(envWidth, envHeight)
+  override var environment = Environment(envWidth, envHeight)
+  override var agents = new Array[Agent](nbParticles)
 
-  var agents = new Array[Agent](nbParticles)
   val alreadyTakenPositions = ListBuffer[Position]()
 
   for (i <- agents.indices) {
     agents(i) = Particle(toroidal)
     agents(i).position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
+    // TODO taken positions
     alreadyTakenPositions += agents(i).position
     val agentPosition = agents(i).position
-    agents(i).shape = Some(new Circle(agentSize, Colors.randomColor()))
+    agents(i).shape = Some(new Circle(agentSize, ColorsGenerator.randomColor()))
     agents(i).shape.get.relocate(agents(i).position.x, agents(i).position.y)
     environment.mark(agentPosition)
   }
