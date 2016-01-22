@@ -34,8 +34,6 @@ trait Agent {
     */
   def doIt(environment: Environment): Unit
 
-  def getNextPosition(environment: Environment): Position
-
 
 
 }

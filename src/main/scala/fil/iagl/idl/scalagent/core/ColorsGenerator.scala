@@ -5,7 +5,7 @@ import javafx.scene.paint.Color
 import scala.util.Random
 
 
-object Colors {
+object ColorsGenerator {
 
   val randomizer = new Random()
 
