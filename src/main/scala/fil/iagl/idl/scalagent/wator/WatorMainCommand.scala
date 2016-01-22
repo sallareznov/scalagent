@@ -3,13 +3,10 @@ package fil.iagl.idl.scalagent.wator
 import fil.iagl.idl.scalagent.core.CommandWithHandling
 import org.backuity.clist._
 
-/**
-  * Created by salla on 21/01/16.
-  */
-class WatorMainCommand extends CommandWithHandling(description = "simulates a bubble chamber using a multi-agent approach") {
+object WatorMainCommand extends Command(name = "wator", description = "blabla") with CommandWithHandling  {
 
-  // TODO TOROIDAL BY DEFAULT
-
+  var width = opt[Int](name = "width", default = 0, description = "the width of the grid representing the environment")
+  var height = opt[Int](name = "height", default = 0, description = "the height of the grid representing the environment")
   var nFishes = opt[Int](name = "nFishes", description = "the number of fishes in the environment, distributed randomly")
   var nSharks = opt[Int](name = "nSharks", description = "the number of sharks in the environment, distributed randomly")
   var fBreed = opt[Int](name = "fBreed", description = "the number of cycles a fish must exist before reproducing")

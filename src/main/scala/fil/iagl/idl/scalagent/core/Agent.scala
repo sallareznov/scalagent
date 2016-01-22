@@ -16,9 +16,9 @@ trait Agent {
   var stepX = 0
   var stepY = 0
   var shape: Option[Shape] = None
-  getADirection()
+  randomDirection()
 
-  def getADirection(): Unit = {
+  def randomDirection(): Unit = {
     stepX = choices(Random.nextInt(3))
     stepY = choices(Random.nextInt(3))
     do {
