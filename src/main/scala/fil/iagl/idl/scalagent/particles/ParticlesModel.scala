@@ -14,7 +14,7 @@ class ParticlesModel(val nbParticles: Int,
                      val speed: Int,
                      val toroidal: Boolean,
                      val equity: Boolean
-                    ) {
+                    ) extends Model {
 
   val environment = Environment(envWidth, envHeight)
 
@@ -36,7 +36,7 @@ class ParticlesModel(val nbParticles: Int,
   /**
     * runs the model (simulates the agents' moves)
     */
-  def run(): Unit = {
+  override def run(): Unit = {
     agents.foreach(agent => {
       val agentOldPosition = agent.position
       agent.doIt(environment)
