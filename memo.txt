@@ -1,0 +1,11 @@
+/*if (ParticlesMainCommand.visibility) {
+      val gc = canvas.getGraphicsContext2D()
+      canvas.getChildren.add(new Line)
+      gc.setLineWidth(1.0)
+      for (x <- 0 to ParticlesMainCommand.envWidth; x+=10) {
+        x1 = if (sharp) x + 0.5 else x
+        gc.moveTo(x1, 0)
+        gc.lineTo(x1, height)
+        gc.stroke()
+      }
+    }*/
