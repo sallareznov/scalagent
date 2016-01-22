@@ -9,11 +9,15 @@ class Tuna extends Agent {
   randomDirection()
 
   override def doIt(environment: Environment): Unit = {
-    var randomPosition = Position(Random.nextInt(environment.width), Random.nextInt(environment.height))
-    while (environment.takenCells(randomPosition.x)(randomPosition.y)) {
-      randomPosition = Position(Random.nextInt(environment.width), Random.nextInt(environment.height))
-    }
+    val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.width
+    val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.height
+    position = Position(newX % environment.width, newY % environment.height)
+    shape.get.relocate(position.x, position.y)
   }
+}
 
-  override def getNextPosition(environment: Environment): Position = ???
+object Tuna {
+
+  def apply() = new Tuna
+
 }
