@@ -1,15 +1,15 @@
 package fil.iagl.idl.scalagent.wator
 
-import java.util
-import javafx.animation.{Timeline, KeyFrame}
+import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
-import javafx.collections.FXCollections
-import javafx.event.{EventHandler, ActionEvent}
+import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
-import javafx.scene.shape.{Rectangle, Circle}
+import javafx.scene.paint.Color
 import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
+
+import fil.iagl.idl.scalagent.core.AgentsShapes
 
 class WatorView extends Application {
 
@@ -24,11 +24,10 @@ class WatorView extends Application {
     val model = new WatorModel(WatorCommand.width, WatorCommand.height, WatorCommand.nTunas, WatorCommand.nSharks, WatorCommand.tBreed, WatorCommand.sBreed, WatorCommand.starve)
     primaryStage.setTitle("Wator")
     val scene = new Scene(canvas, primScreenBounds.getWidth, primScreenBounds.getHeight)
+    //scene.setFill(Color.SKYBLUE)
     primaryStage.setScene(scene)
     primaryStage.show()
-    val agentsCircles = FXCollections.observableArrayList(new util.ArrayList[Rectangle]())
-    model.agents. foreach(agent => agentsCircles.addAll(agent.shape.get.asInstanceOf[Rectangle]))
-    canvas.getChildren.addAll(agentsCircles)
+    AgentsShapes.agentsShapes.values.foreach(shape => canvas.getChildren.add(shape))
     // TODO speed argument
     val timelineLoop = new Timeline(new KeyFrame(Duration.millis(15), new EventHandler[ActionEvent]() {
       def handle(actionEvent: ActionEvent): Unit = {

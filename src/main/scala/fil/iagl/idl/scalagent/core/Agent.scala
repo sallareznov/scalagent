@@ -15,7 +15,6 @@ trait Agent {
   val choices = List(-1, 0, 1)
   var stepX = 0
   var stepY = 0
-  var shape: Option[Shape] = None
   randomDirection()
 
   def randomDirection(): Unit = {

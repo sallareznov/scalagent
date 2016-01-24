@@ -1,6 +1,6 @@
 package fil.iagl.idl.scalagent.particles
 
-import fil.iagl.idl.scalagent.core.{Position, Environment, Agent}
+import fil.iagl.idl.scalagent.core.{AgentsShapes, Position, Environment, Agent}
 
 import scala.util.Random
 
@@ -15,23 +15,23 @@ class Particle(val toroidal: Boolean) extends Agent {
 
   override def doIt(environment: Environment): Unit = {
     val newPosition = getNextPosition(environment)
-    if (positionIsEmpty(newPosition, environment)) {
+    if (!environment.takenCells(newPosition.x)(newPosition.y)) {
       position = newPosition
     } else {
       position = changeDirection(newPosition, environment)
     }
-    shape.get.relocate(position.x, position.y)
+    AgentsShapes.relocateShape(this, position)
   }
 
   def getNextPosition(environment: Environment): Position = {
     if (toroidal) {
-      val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.width
-      val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.height
+      val newX = if ((position.x + stepX) >= 0) position.x + stepX else (position.x + stepX) + environment.width
+      val newY = if ((position.y + stepY) >= 0) position.y + stepY else (position.y + stepY) + environment.height
       Position(newX % environment.width, newY % environment.height)
     }
     else {
-      var newX = (position.x + stepX)
-      var newY = (position.y + stepY)
+      var newX = position.x + stepX
+      var newY = position.y + stepY
 
       if ((newX < 0) || (newX >= environment.width)) {
         stepX = -stepX

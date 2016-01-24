@@ -11,6 +11,8 @@ import javafx.scene.shape.Circle
 import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 
+import fil.iagl.idl.scalagent.core.AgentsShapes
+
 // TODO Evolutionary curve of the execution time of the application depending on the number of particles
 // TODO - without any interaction between them
 // TODO - with an interaction between them
@@ -29,9 +31,7 @@ class ParticlesView extends Application {
     val scene = new Scene(canvas, primScreenBounds.getWidth, primScreenBounds.getHeight)
     primaryStage.setScene(scene)
     primaryStage.show()
-    val agentsShapes = FXCollections.observableArrayList(new util.ArrayList[Circle]())
-    model.agents.foreach(agent => agentsShapes.addAll(agent.shape.get.asInstanceOf[Circle]))
-    canvas.getChildren.addAll(agentsShapes)
+    AgentsShapes.agentsShapes.values.foreach(shape => canvas.getChildren.add(shape))
     val timelineLoop = new Timeline(new KeyFrame(Duration.millis(ParticlesCommand.speed), new EventHandler[ActionEvent]() {
       def handle(actionEvent: ActionEvent): Unit = {
         model.run()

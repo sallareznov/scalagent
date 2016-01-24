@@ -17,22 +17,23 @@ class ParticlesModel(val nbParticles: Int,
                     ) extends Model {
 
   override var environment = Environment(envWidth, envHeight)
-  override var agents = new Array[Agent](nbParticles)
+  override var agents = new ListBuffer[Agent]()
 
   val alreadyTakenPositions = ListBuffer[Position]()
 
-  for (i <- agents.indices) {
-    agents(i) = Particle(toroidal)
-    agents(i).position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
+  for (i <- 0 until nbParticles) {
+    val particle = Particle(toroidal)
+    particle.position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
     // TODO taken positions
-    alreadyTakenPositions += agents(i).position
-    val agentPosition = agents(i).position
-    agents(i).shape = Some(new Circle(agentSize, ColorsGenerator.randomColor()))
-    agents(i).shape.get.relocate(agents(i).position.x, agents(i).position.y)
-    environment.mark(agentPosition)
+    alreadyTakenPositions += particle.position
+    val particleShape = new Circle(agentSize, ColorsGenerator.randomColor())
+    particleShape.relocate(particle.position.x, particle.position.y)
+    AgentsShapes.linkAgentToShape(particle, particleShape)
+    environment.mark(particle.position)
+    agents += particle
   }
   if (equity)
-    agents = Random.shuffle(agents.toList).toArray
+    agents = Random.shuffle(agents)
 
   /**
     * runs the model (simulates the agents' moves)
