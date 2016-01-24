@@ -6,7 +6,7 @@ import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
-import javafx.stage.{Screen, Stage}
+import javafx.stage.{WindowEvent, Screen, Stage}
 import javafx.util.Duration
 
 import fil.iagl.idl.scalagent.core.AgentsShapes
@@ -27,10 +27,15 @@ class WatorView extends Application {
     //scene.setFill(Color.SKYBLUE)
     primaryStage.setScene(scene)
     primaryStage.show()
+    primaryStage.setOnCloseRequest(new EventHandler[WindowEvent]() {
+      override def handle(event: WindowEvent): Unit = {
+        // TODO get the number of laps every agent lasts and write it on a file (for the age pyramid)
+      }
+    })
     AgentsShapes.agentsShapes.values.foreach(shape => canvas.getChildren.add(shape))
     // TODO speed argument
     val timelineLoop = new Timeline(new KeyFrame(Duration.millis(15), new EventHandler[ActionEvent]() {
-      def handle(actionEvent: ActionEvent): Unit = {
+      override def handle(actionEvent: ActionEvent): Unit = {
         model.run()
       }
     }))
