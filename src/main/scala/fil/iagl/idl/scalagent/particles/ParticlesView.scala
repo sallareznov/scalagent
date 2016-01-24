@@ -1,13 +1,10 @@
 package fil.iagl.idl.scalagent.particles
 
-import java.util
 import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
-import javafx.collections.FXCollections
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
-import javafx.scene.shape.Circle
 import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 

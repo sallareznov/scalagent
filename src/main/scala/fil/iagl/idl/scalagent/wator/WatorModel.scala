@@ -1,7 +1,7 @@
 package fil.iagl.idl.scalagent.wator
 
 import javafx.scene.paint.Color
-import javafx.scene.shape.{Rectangle, Circle}
+import javafx.scene.shape.Rectangle
 
 import fil.iagl.idl.scalagent.core._
 

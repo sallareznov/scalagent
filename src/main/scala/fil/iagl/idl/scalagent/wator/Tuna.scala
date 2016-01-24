@@ -1,9 +1,6 @@
 package fil.iagl.idl.scalagent.wator
 
-import fil.iagl.idl.scalagent.core.{AgentsShapes, Position, Environment, Agent}
-
-import scala.util.Random
-import scalafx.scene.shape
+import fil.iagl.idl.scalagent.core.{Agent, AgentsShapes, Environment, Position}
 
 class Tuna(val breed: Int) extends Agent {
 
@@ -13,14 +10,13 @@ class Tuna(val breed: Int) extends Agent {
   override def doIt(environment: Environment): Unit = {
     val nextPotentialPosition = nextPosition(environment)
     nextPotentialPosition match {
-      case Some(x) => {
-        val littleTuna = Tuna(breed)
-        littleTuna.position = Position(position.x, position.y)
-        val littleTunaShape =
-      }
+      case Some(x) =>        //val littleTuna = Tuna(breed)
+        //littleTuna.position = Position(position.x, position.y)
+       // val littleTunaShape =
+
     }
     if (currentBreed == breed) {
-      val littleTuna =
+      //val littleTuna =
       // TODO reproduction
     }
     /*val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.width

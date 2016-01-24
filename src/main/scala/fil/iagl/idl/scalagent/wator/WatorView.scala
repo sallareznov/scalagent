@@ -5,8 +5,7 @@ import javafx.application.Application
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
-import javafx.scene.paint.Color
-import javafx.stage.{WindowEvent, Screen, Stage}
+import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.util.Duration
 
 import fil.iagl.idl.scalagent.core.AgentsShapes
