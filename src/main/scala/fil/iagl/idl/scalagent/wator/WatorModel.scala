@@ -16,7 +16,7 @@ class WatorModel(val width: Int,
                  val sBreed: Int,
                  val starve: Int) extends Model {
 
-  override var environment = Environment(width, height)
+  override var environment = WatorEnvironment(width, height)
   override var agents = ListBuffer[Agent]()
   val alreadyTakenPositions = ListBuffer[Position]()
 
@@ -29,6 +29,7 @@ class WatorModel(val width: Int,
     tunaShape.relocate(tuna.position.x, tuna.position.y)
     AgentsShapes.linkAgentToShape(tuna, tunaShape)
     environment.mark(tuna.position)
+    environment.setIsTuna(tuna.position,true)
     agents += tuna
   }
 
@@ -41,6 +42,7 @@ class WatorModel(val width: Int,
     sharkShape.relocate(shark.position.x, shark.position.y)
     AgentsShapes.linkAgentToShape(shark, sharkShape)
     environment.mark(shark.position)
+    environment.setIsTuna(shark.position,false)
     agents += shark
   }
 
