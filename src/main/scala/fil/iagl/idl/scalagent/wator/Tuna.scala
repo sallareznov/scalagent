@@ -1,48 +1,43 @@
 package fil.iagl.idl.scalagent.wator
 
-import fil.iagl.idl.scalagent.core.{Agent, AgentsShapes, Environment, Position}
+import javafx.scene.paint.Color
+import javafx.scene.shape.Rectangle
 
-class Tuna(val breed: Int) extends Agent {
+import fil.iagl.idl.scalagent.core._
 
-  var currentBreed = 0
-  randomDirection()
+class Tuna(val breed: Int, val environment: Environment) extends Agent {
 
-  override def doIt(environment: Environment): Unit = {
-    val nextPotentialPosition = nextPosition(environment)
+  var breedCounter = 0
+
+  override def doIt(): Unit = {
+    val nextPotentialPosition = nextPosition(environment, AgentType.NO_TYPE)
     nextPotentialPosition match {
-      case Some(x) =>        //val littleTuna = Tuna(breed)
-        //littleTuna.position = Position(position.x, position.y)
-       // val littleTunaShape =
-
-    }
-    if (currentBreed == breed) {
-      //val littleTuna =
-      // TODO reproduction
-    }
-    /*val newX = if ((position.x + stepX) >= 0) (position.x + stepX) else (position.x + stepX) + environment.width
-    val newY = if ((position.y + stepY) >= 0) (position.y + stepY) else (position.y + stepY) + environment.height
-    position = Position(newX % environment.width, newY % environment.height)
-    AgentsShapes.relocateShape(this, position)*/
-
-    currentBreed += 1
-    AgentsShapes.relocateShape(this, position)
-  }
-
-  def nextPosition(environment: Environment): Option[Position] = {
-    // TODO find a more functional way to write these loops
-    for (i <- -1 to 1; j <- -1 to 1) {
-      val toroidalNextPotentialAbscissa = if ((position.x + i) >= 0) position.x + i else (position.x + i) + environment.width
-      val toroidalNextPotentialOrdinate = if ((position.y + j) >= 0) position.y + j else (position.y + j) + environment.height
-      if (!environment.takenCells(toroidalNextPotentialAbscissa % environment.width)(toroidalNextPotentialOrdinate % environment.height)) {
-        Some(Position(toroidalNextPotentialAbscissa % environment.width, toroidalNextPotentialOrdinate % environment.height))
+      case Some(x) => {
+        if (breedCounter == breed) {
+          val child = Tuna(breed, environment)
+          child.position = Position(position.x, position.y)
+          val childShape = new Rectangle(8, 8, Color.GREEN)
+          childShape.relocate(position.x, position.y)
+          AgentsShapes.linkAgentToShape(child, childShape)
+          breedCounter = 0
+        }
+        else {
+          breedCounter += 1
+          environment.unmark(position.x, position.y)
+        }
+        position = nextPotentialPosition.get
+        AgentsShapes.relocateShape(this, position)
+        environment.mark(position.x, position.y, AgentType.TUNA)
       }
+      case None => ()
     }
-    None
+
   }
+
 }
 
 object Tuna {
 
-  def apply(breed: Int) = new Tuna(breed)
+  def apply(breed: Int, environment: Environment) = new Tuna(breed, environment)
 
 }

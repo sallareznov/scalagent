@@ -8,9 +8,9 @@ import javafx.scene.layout.Pane
 import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.util.Duration
 
-import fil.iagl.idl.scalagent.core.AgentsShapes
+import fil.iagl.idl.scalagent.core.{Agent, AgentsShapes, Observer}
 
-class WatorView extends Application {
+class WatorView extends Application with Observer {
 
   val canvas = new Pane()
 
@@ -21,9 +21,9 @@ class WatorView extends Application {
       WatorCommand.height = primScreenBounds.getHeight.toInt
     }
     val model = new WatorModel(WatorCommand.width, WatorCommand.height, WatorCommand.nTunas, WatorCommand.nSharks, WatorCommand.tBreed, WatorCommand.sBreed, WatorCommand.starve)
+    model.addObserver(this)
     primaryStage.setTitle("Wator")
-    val scene = new Scene(canvas, primScreenBounds.getWidth, primScreenBounds.getHeight)
-    //scene.setFill(Color.SKYBLUE)
+    val scene = new Scene(canvas, WatorCommand.width, WatorCommand.height)
     primaryStage.setScene(scene)
     primaryStage.show()
     primaryStage.setOnCloseRequest(new EventHandler[WindowEvent]() {
@@ -32,14 +32,17 @@ class WatorView extends Application {
       }
     })
     AgentsShapes.agentsShapes.values.foreach(shape => canvas.getChildren.add(shape))
-    // TODO speed argument
-    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(15), new EventHandler[ActionEvent]() {
+    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(WatorCommand.speed), new EventHandler[ActionEvent]() {
       override def handle(actionEvent: ActionEvent): Unit = {
         model.run()
       }
     }))
     timelineLoop.setCycleCount(-1)
     timelineLoop.play()
+  }
+
+  override def update(agents: scala.collection.Set[Agent]): Unit = {
+    agents.foreach(agent => canvas.getChildren.add(AgentsShapes.agentsShapes.get(agent).get))
   }
 }
 

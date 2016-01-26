@@ -25,7 +25,7 @@ class ParticlesView extends Application {
     }
     val model = new ParticlesModel(ParticlesCommand.nbParticles, ParticlesCommand.envWidth, ParticlesCommand.envHeight, ParticlesCommand.agentSize, ParticlesCommand.speed, ParticlesCommand.toroidal, ParticlesCommand.equity)
     primaryStage.setTitle("Particles")
-    val scene = new Scene(canvas, primScreenBounds.getWidth, primScreenBounds.getHeight)
+    val scene = new Scene(canvas, ParticlesCommand.envWidth, ParticlesCommand.envHeight)
     primaryStage.setScene(scene)
     primaryStage.show()
     AgentsShapes.agentsShapes.values.foreach(shape => canvas.getChildren.add(shape))

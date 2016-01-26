@@ -1,6 +1,6 @@
 package fil.iagl.idl.scalagent.particles
 
-import fil.iagl.idl.scalagent.core.{AgentsShapes, Position, Environment, Agent}
+import fil.iagl.idl.scalagent.core._
 
 import scala.util.Random
 
@@ -11,11 +11,24 @@ import scala.util.Random
   * (i.e. the cell is already taken by another ball), the agent moves back to the opposite direction.
   *
   */
-class Particle(val toroidal: Boolean) extends Agent {
+class Particle(val toroidal: Boolean, val environment: Environment) extends Agent {
 
-  override def doIt(environment: Environment): Unit = {
+  var stepX = 0
+  var stepY = 0
+  randomDirection()
+
+  def randomDirection(): Unit = {
+    stepX = choices(Random.nextInt(3))
+    stepY = choices(Random.nextInt(3))
+    do {
+      stepX = choices(Random.nextInt(3))
+      stepY = choices(Random.nextInt(3))
+    } while (stepX == 0 && stepY == 0)
+  }
+
+  override def doIt(): Unit = {
     val newPosition = getNextPosition(environment)
-    if (!environment.takenCells(newPosition.x)(newPosition.y)) {
+    if (positionIsEmpty(newPosition, environment)) {
       position = newPosition
     } else {
       position = changeDirection(newPosition, environment)
@@ -46,23 +59,13 @@ class Particle(val toroidal: Boolean) extends Agent {
     }
   }
 
-  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = !environment.takenCells(newPosition.x)(newPosition.y)
+  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = environment.getType(newPosition.x, newPosition.y) == AgentType.NO_TYPE
 
   def changeDirection(position: Position, environment: Environment): Position = {
     var newPosition = position
     do {
-      stepX = Random.nextInt(3) match {
-        case 0 => 0;
-        case 1 => 1;
-        case 2 => -1;
-      }
-      stepY = Random.nextInt(3) match {
-        case 0 => 0;
-        case 1 => 1;
-        case 2 => -1;
-      }
+      randomDirection()
       newPosition = getNextPosition(environment)
-
     } while (((newPosition.x != position.x) && (newPosition.y != position.y)) && (!positionIsEmpty(position, environment)))
     newPosition
   }
@@ -75,6 +78,6 @@ class Particle(val toroidal: Boolean) extends Agent {
   */
 object Particle {
 
-  def apply(toroidal: Boolean) = new Particle(toroidal)
+  def apply(toroidal: Boolean, environment: Environment) = new Particle(toroidal, environment)
 
 }

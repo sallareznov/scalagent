@@ -16,4 +16,3 @@ object ParticlesCommand extends Command(name = "particles", description = "simul
   // TODO seed (???)
 
 }
-

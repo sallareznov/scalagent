@@ -4,6 +4,7 @@ import javafx.scene.shape.Circle
 
 import fil.iagl.idl.scalagent.core._
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
@@ -16,22 +17,25 @@ class ParticlesModel(val nbParticles: Int,
                      val equity: Boolean
                     ) extends Model {
 
-  override var environment = Environment(envWidth, envHeight)
-  override var agents = new ListBuffer[Agent]()
+  val environment = Environment(envWidth, envHeight)
+  override var agents = mutable.HashSet[Agent]()
 
   val alreadyTakenPositions = ListBuffer[Position]()
 
   for (i <- 0 until nbParticles) {
-    val particle = Particle(toroidal)
+    val particle = Particle(toroidal, environment)
     particle.position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
     // TODO taken positions
     alreadyTakenPositions += particle.position
-    val particleShape = new Circle(agentSize, ColorsGenerator.randomColor())
+    val particleShape = new Circle(agentSize, ParticlesColorsGenerator.randomColor())
     particleShape.relocate(particle.position.x, particle.position.y)
     AgentsShapes.linkAgentToShape(particle, particleShape)
-    environment.mark(particle.position)
+    environment.mark(particle.position.x, particle.position.y, AgentType.PARTICLE)
     agents += particle
   }
+
+  //environment.agentsTypes.foreach(_.foreach(println))
+
   if (equity)
     agents = Random.shuffle(agents)
 
@@ -41,9 +45,9 @@ class ParticlesModel(val nbParticles: Int,
   override def run(): Unit = {
     agents.foreach(agent => {
       val agentOldPosition = agent.position
-      agent.doIt(environment)
-      environment.unmark(agentOldPosition)
-      environment.mark(agent.position)
+      agent.doIt()
+      environment.unmark(agentOldPosition.x, agentOldPosition.y)
+      environment.mark(agent.position.x, agent.position.y, AgentType.PARTICLE)
     })
   }
 

@@ -1,11 +1,11 @@
-package fil.iagl.idl.scalagent.core
+package fil.iagl.idl.scalagent.particles
 
 import javafx.scene.paint.Color
 
 import scala.util.Random
 
 
-object ColorsGenerator {
+object ParticlesColorsGenerator {
 
   val randomizer = new Random()
 
