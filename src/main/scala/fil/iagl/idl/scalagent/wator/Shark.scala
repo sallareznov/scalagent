@@ -1,61 +1,47 @@
 package fil.iagl.idl.scalagent.wator
 
+import javafx.scene.paint.Color
+
 import fil.iagl.idl.scalagent.core._
 
-import scala.util.Random
-
-class Shark(val breed: Int, val starve: Int, val environment: Environment) extends Agent {
+class Shark(breed: Int, val starve: Int, val environment: Environment) extends BreedingAgent(breed) {
 
   var starvationCounter = 0
-  var breedCounter = 0
 
   override def doIt(): Unit = {
-    var nextPotentialTunaPosition: Option[Position] = None
+    // TODO solution to get access to the agent object in order to remove it from the canvas
+    val nextPotentialTunaPosition = nextPosition(environment, AgentType.TUNA)
     if (starvationCounter == starve) {
       AgentsShapes.removeAgent(this)
       environment.unmark(position.x, position.y)
     }
     else {
-      nextPotentialTunaPosition = nextPosition(environment, AgentType.TUNA)
       nextPotentialTunaPosition match {
         case Some(x) => {
-          // TODO eat
+          //environment.unmark(position.x, position.y)
+          //AgentsShapes.
         }
         case None => {
-          var nextPotentialFreePosition = nextPosition(environment, AgentType.NO_TYPE)
+          val nextPotentialFreePosition = nextPosition(environment, AgentType.NO_TYPE)
           nextPotentialFreePosition match {
             case Some(x) => {
-              if (breedCounter == breed) {
-                // TODO reproduction
-              }
-              else {
-
-              }
-              // TODO move
+              val potentialChild = Shark(breed, starve, environment)
+              moveAndAimToReproduce(environment, potentialChild, Color.RED)
+              position = nextPotentialFreePosition.get
+              AgentsShapes.relocateShape(this, position)
+              environment.mark(position.x, position.y, AgentType.SHARK)
+              starvationCounter += 1
+              breedCounter += 1
             }
             case None => {
-              //
+              starvationCounter += 1
+              breedCounter += 1
             }
           }
         }
       }
     }
   }
-
-  def move(environment: Environment, position: Position): Unit = {
-    if (position != null) {
-      AgentsShapes.relocateShape(this, position)
-    } else {
-      val stepX = choices(Random.nextInt(3))
-      val stepY = choices(Random.nextInt(3))
-      val newX = if ((position.x + stepX) >= 0) position.x + stepX else (position.x + stepX) + environment.width
-      val newY = if ((position.y + stepY) >= 0) position.y + stepY else (position.y + stepY) + environment.height
-      val newPosition = Position(newX % environment.width, newY % environment.height)
-      //TODO check newPosition is empty
-      AgentsShapes.relocateShape(this, newPosition)
-    }
-  }
-
 }
 
 object Shark {

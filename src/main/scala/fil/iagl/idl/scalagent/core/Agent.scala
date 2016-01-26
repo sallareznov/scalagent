@@ -20,21 +20,4 @@ trait Agent {
     */
   def doIt(): Unit
 
-  def nextPosition(environment: Environment, wantedType: AgentType.Type): Option[Position] = {
-    val list1 = Random.shuffle((-1).to(1))
-    val list2 = Random.shuffle((-1).to(1))
-
-    list1.foreach(i => list2.foreach(j => {
-      val toroidalNextPotentialAbscissa = if ((position.x + i) >= 0) position.x + i else (position.x + i) + environment.width
-      val toroidalNextPotentialOrdinate = if ((position.y + j) >= 0) position.y + j else (position.y + j) + environment.height
-      val newPosition = Position(toroidalNextPotentialAbscissa % environment.width, toroidalNextPotentialOrdinate % environment.height)
-      if (environment.getType(newPosition.x, newPosition.y) == wantedType) {
-        return Some(newPosition)
-      }
-    }))
-    None
-  }
-
-
-
 }
