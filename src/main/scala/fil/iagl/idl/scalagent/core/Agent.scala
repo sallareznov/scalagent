@@ -13,6 +13,8 @@ trait Agent {
 
   var position = Position(0, 0)
   val choices = List(-1, 0, 1)
+  var agentType: AgentType.Type = AgentType.NO_TYPE
+  var isVisited = false
 
   /**
     * Performs an action, depending on the environment (mainly the position of other agents)

@@ -1,7 +1,7 @@
 package fil.iagl.idl.scalagent.wator
 
 import javafx.scene.paint.Color
-import javafx.scene.shape.Rectangle
+import javafx.scene.shape.{Circle, Rectangle}
 
 import fil.iagl.idl.scalagent.core._
 
@@ -26,10 +26,10 @@ class WatorModel(val width: Int,
     tuna.position = Position(Random.nextInt(width), Random.nextInt(height))
     // TODO taken positions
     alreadyTakenPositions += tuna.position
-    val tunaShape = new Rectangle(8, 8, Color.GREEN)
-    tunaShape.relocate(tuna.position.x, tuna.position.y)
+    val tunaShape = new Circle(2.5, Color.GREEN)
+    tunaShape.relocate(tuna.position.x * 5, tuna.position.y * 5)
     AgentsShapes.linkAgentToShape(tuna, tunaShape)
-    environment.mark(tuna.position.x, tuna.position.y, AgentType.TUNA)
+    environment.mark(tuna.position.x, tuna.position.y, tuna)
     agents += tuna
   }
 
@@ -38,19 +38,29 @@ class WatorModel(val width: Int,
     shark.position = Position(Random.nextInt(width), Random.nextInt(height))
     // TODO taken positions
     alreadyTakenPositions += shark.position
-    val sharkShape = new Rectangle(8, 8, Color.RED)
-    sharkShape.relocate(shark.position.x, shark.position.y)
+    val sharkShape = new Circle(2.5, Color.RED)
+    sharkShape.relocate(shark.position.x * 5, shark.position.y * 5)
     AgentsShapes.linkAgentToShape(shark, sharkShape)
-    environment.mark(shark.position.x, shark.position.y, AgentType.SHARK)
+    environment.mark(shark.position.x, shark.position.y, shark)
     agents += shark
   }
 
   agents = Random.shuffle(agents)
 
   override def run(): Unit = {
-    agents.foreach(_.doIt())
+    val start = System.currentTimeMillis
+    agents.foreach(agent => {
+      if (!agent.isVisited) {
+        agent.doIt()
+      }
+    })
     val newAgents = AgentsShapes.agentsShapes.keySet &~ agents
+    val deletedAgents = agents &~ AgentsShapes.agentsShapes.keySet
+    agents = agents --= deletedAgents
     agents = agents ++= newAgents
-    notifyObservers(newAgents)
+    val deletedShapes = AgentsShapes.trash
+    notifyObservers(newAgents, deletedShapes)
+    AgentsShapes.emptyTrash()
+  //  println(System.currentTimeMillis - start)
   }
 }

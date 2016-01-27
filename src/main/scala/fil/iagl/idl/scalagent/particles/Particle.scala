@@ -59,7 +59,7 @@ class Particle(val toroidal: Boolean, val environment: Environment) extends Agen
     }
   }
 
-  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = environment.getType(newPosition.x, newPosition.y) == AgentType.NO_TYPE
+  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = environment.getAgent(newPosition.x, newPosition.y).isEmpty
 
   def changeDirection(position: Position, environment: Environment): Position = {
     var newPosition = position

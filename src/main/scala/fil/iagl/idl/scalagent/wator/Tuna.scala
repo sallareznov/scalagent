@@ -6,15 +6,17 @@ import fil.iagl.idl.scalagent.core._
 
 class Tuna(breed: Int, val environment: Environment) extends BreedingAgent(breed) {
 
+  agentType = AgentType.TUNA
+
   override def doIt(): Unit = {
-    val nextPotentialPosition = nextPosition(environment, AgentType.NO_TYPE)
+    val nextPotentialPosition = nextFreePosition(environment)
     nextPotentialPosition match {
       case Some(x) => {
         val potentialChild = Tuna(breed, environment)
         moveAndAimToReproduce(environment, potentialChild, Color.GREEN)
         position = nextPotentialPosition.get
         AgentsShapes.relocateShape(this, position)
-        environment.mark(position.x, position.y, AgentType.TUNA)
+        environment.mark(position.x, position.y, this)
       }
       case None => breedCounter += 1
     }

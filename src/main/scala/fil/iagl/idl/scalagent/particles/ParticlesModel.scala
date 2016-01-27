@@ -30,7 +30,7 @@ class ParticlesModel(val nbParticles: Int,
     val particleShape = new Circle(agentSize, ParticlesColorsGenerator.randomColor())
     particleShape.relocate(particle.position.x, particle.position.y)
     AgentsShapes.linkAgentToShape(particle, particleShape)
-    environment.mark(particle.position.x, particle.position.y, AgentType.PARTICLE)
+    environment.mark(particle.position.x, particle.position.y, particle)
     agents += particle
   }
 
@@ -47,7 +47,7 @@ class ParticlesModel(val nbParticles: Int,
       val agentOldPosition = agent.position
       agent.doIt()
       environment.unmark(agentOldPosition.x, agentOldPosition.y)
-      environment.mark(agent.position.x, agent.position.y, AgentType.PARTICLE)
+      environment.mark(agent.position.x, agent.position.y, agent)
     })
   }
 

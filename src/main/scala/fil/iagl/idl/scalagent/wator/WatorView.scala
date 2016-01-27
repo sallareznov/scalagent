@@ -5,10 +5,13 @@ import javafx.application.Application
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
+import javafx.scene.shape.Shape
 import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.util.Duration
 
 import fil.iagl.idl.scalagent.core.{Agent, AgentsShapes, Observer}
+
+import scala.collection.mutable
 
 class WatorView extends Application with Observer {
 
@@ -23,7 +26,7 @@ class WatorView extends Application with Observer {
     val model = new WatorModel(WatorCommand.width, WatorCommand.height, WatorCommand.nTunas, WatorCommand.nSharks, WatorCommand.tBreed, WatorCommand.sBreed, WatorCommand.starve)
     model.addObserver(this)
     primaryStage.setTitle("Wator")
-    val scene = new Scene(canvas, WatorCommand.width, WatorCommand.height)
+    val scene = new Scene(canvas, WatorCommand.width * 5, WatorCommand.height * 5)
     primaryStage.setScene(scene)
     primaryStage.show()
     primaryStage.setOnCloseRequest(new EventHandler[WindowEvent]() {
@@ -41,8 +44,9 @@ class WatorView extends Application with Observer {
     timelineLoop.play()
   }
 
-  override def update(agents: scala.collection.Set[Agent]): Unit = {
-    agents.foreach(agent => canvas.getChildren.add(AgentsShapes.agentsShapes.get(agent).get))
+  override def update(newAgents: scala.collection.Set[Agent], deletedShapes: mutable.HashSet[Shape]): Unit = {
+    newAgents.foreach(newAgent => canvas.getChildren.add(AgentsShapes.agentsShapes.get(newAgent).get))
+    deletedShapes.foreach(shape => canvas.getChildren.remove(shape))
   }
 }
 
