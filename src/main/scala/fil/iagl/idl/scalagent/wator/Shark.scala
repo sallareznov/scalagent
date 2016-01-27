@@ -29,7 +29,7 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends B
           val potentialChild = Shark(breed, starve, environment)
           moveAndAimToReproduce(environment, potentialChild, Color.RED)
           position = pos
-          AgentsShapes.relocateShape(this, position)
+          AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
           environment.mark(position.x, position.y, this)
           starvationCounter = 0
         }
@@ -40,7 +40,7 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends B
               val potentialChild = Shark(breed, starve, environment)
               moveAndAimToReproduce(environment, potentialChild, Color.RED)
               position = nextPotentialFreePosition.get
-              AgentsShapes.relocateShape(this, position)
+              AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
               environment.mark(position.x, position.y, this)
               starvationCounter += 1
             }

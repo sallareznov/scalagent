@@ -11,7 +11,7 @@ object AgentsShapes {
 
   def linkAgentToShape(agent: Agent, shape: Shape): Unit = agentsShapes += (agent -> shape)
 
-  def relocateShape(agent: Agent, newPosition: Position): Unit = agentsShapes(agent).relocate(newPosition.x * 5, newPosition.y * 5)
+  def relocateShape(agent: Agent, x: Int, y: Int): Unit = agentsShapes(agent).relocate(x, y)
 
   def removeAgent(agent: Agent): Unit = {
     trash += agentsShapes.get(agent).get

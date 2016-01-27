@@ -11,6 +11,7 @@ abstract class BreedingAgent(val breed: Int) extends Agent {
 
   var breedCounter = 0
 
+
   def nextFreePosition(environment: Environment): Option[Position] = {
     val list1 = Random.shuffle((-1).to(1))
     val list2 = Random.shuffle((-1).to(1))

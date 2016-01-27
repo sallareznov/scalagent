@@ -34,8 +34,6 @@ class ParticlesModel(val nbParticles: Int,
     agents += particle
   }
 
-  //environment.agentsTypes.foreach(_.foreach(println))
-
   if (equity)
     agents = Random.shuffle(agents)
 

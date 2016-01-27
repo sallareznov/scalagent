@@ -20,6 +20,9 @@ class WatorModel(val width: Int,
   val environment = Environment(width, height)
   override var agents = mutable.HashSet[Agent]()
   val alreadyTakenPositions = ListBuffer[Position]()
+  // TODO for the graphs
+  var nbTunas = nTunas
+  var nbSharks = nSharks
 
   for (i <- 0 until nTunas) {
     val tuna = Tuna(tBreed, environment)
@@ -48,7 +51,6 @@ class WatorModel(val width: Int,
   agents = Random.shuffle(agents)
 
   override def run(): Unit = {
-    val start = System.currentTimeMillis
     agents.foreach(agent => {
       if (!agent.isVisited) {
         agent.doIt()
@@ -61,6 +63,5 @@ class WatorModel(val width: Int,
     val deletedShapes = AgentsShapes.trash
     notifyObservers(newAgents, deletedShapes)
     AgentsShapes.emptyTrash()
-  //  println(System.currentTimeMillis - start)
   }
 }

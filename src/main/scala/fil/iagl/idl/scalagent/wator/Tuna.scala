@@ -15,7 +15,7 @@ class Tuna(breed: Int, val environment: Environment) extends BreedingAgent(breed
         val potentialChild = Tuna(breed, environment)
         moveAndAimToReproduce(environment, potentialChild, Color.GREEN)
         position = nextPotentialPosition.get
-        AgentsShapes.relocateShape(this, position)
+        AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
         environment.mark(position.x, position.y, this)
       }
       case None => breedCounter += 1
