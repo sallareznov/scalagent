@@ -1,8 +1,11 @@
 package fil.iagl.idl.scalagent.core
 
+import scala.collection.mutable
+
 trait Model {
 
-  var agents: scala.collection.mutable.HashSet[Agent]
+  var agents = mutable.HashSet[Agent]()
+  val agentsShapes = AgentsShapes()
 
   def run(): Unit
 

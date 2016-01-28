@@ -26,14 +26,14 @@ class Particle(val toroidal: Boolean, val environment: Environment) extends Agen
     } while (stepX == 0 && stepY == 0)
   }
 
-  override def doIt(): Unit = {
+  override def doIt(agentsShapes: AgentsShapes): Unit = {
     val newPosition = getNextPosition(environment)
     if (positionIsEmpty(newPosition, environment)) {
       position = newPosition
     } else {
       position = changeDirection(newPosition, environment)
     }
-    AgentsShapes.relocateShape(this, position.x, position.y)
+    agentsShapes.relocateShape(this, position.x, position.y)
   }
 
   def getNextPosition(environment: Environment): Position = {

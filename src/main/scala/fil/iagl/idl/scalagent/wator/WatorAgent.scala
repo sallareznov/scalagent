@@ -26,13 +26,14 @@ abstract class WatorAgent(val breed: Int) extends Agent with Observable {
     None
   }
 
-  def moveAndAimToReproduce(environment: Environment, potentialChild: Agent, color: Color): Unit = {
+  def moveAndAimToReproduce(environment: Environment, potentialChild: Agent, color: Color, agentsShapes: AgentsShapes): Unit = {
     if (breedCounter == breed) {
       potentialChild.position = Position(position.x, position.y)
       val childShape = new Circle(2.5, color)
       childShape.relocate(position.x * 5, position.y * 5)
-      AgentsShapes.linkAgentToShape(potentialChild, childShape)
+      agentsShapes.linkAgentToShape(potentialChild, childShape)
       environment.mark(potentialChild.position.x, potentialChild.position.y, potentialChild)
+      if (agentType == AgentType.TUNA) WatorMetricsData.incrementNTunas() else WatorMetricsData.incrementNSharks()
       breedCounter = 0
     }
     else {

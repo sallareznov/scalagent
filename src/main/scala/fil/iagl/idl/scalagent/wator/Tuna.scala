@@ -8,14 +8,14 @@ class Tuna(breed: Int, val environment: Environment) extends WatorAgent(breed) {
 
   agentType = AgentType.TUNA
 
-  override def doIt(): Unit = {
+  override def doIt(agentsShapes: AgentsShapes): Unit = {
     val nextPotentialPosition = nextFreePosition(environment)
     nextPotentialPosition match {
       case Some(x) => {
         val potentialChild = Tuna(breed, environment)
-        moveAndAimToReproduce(environment, potentialChild, Color.ROSYBROWN)
+        moveAndAimToReproduce(environment, potentialChild, Color.ROSYBROWN, agentsShapes)
         position = nextPotentialPosition.get
-        AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
+        agentsShapes.relocateShape(this, position.x * 5, position.y * 5)
         environment.mark(position.x, position.y, this)
       }
       case None => breedCounter += 1

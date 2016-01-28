@@ -18,7 +18,6 @@ class ParticlesModel(val nbParticles: Int,
                     ) extends Model {
 
   val environment = Environment(envWidth, envHeight)
-  override var agents = mutable.HashSet[Agent]()
 
   val alreadyTakenPositions = ListBuffer[Position]()
 
@@ -29,7 +28,7 @@ class ParticlesModel(val nbParticles: Int,
     alreadyTakenPositions += particle.position
     val particleShape = new Circle(agentSize, ParticlesColorsGenerator.randomColor())
     particleShape.relocate(particle.position.x, particle.position.y)
-    AgentsShapes.linkAgentToShape(particle, particleShape)
+    agentsShapes.linkAgentToShape(particle, particleShape)
     environment.mark(particle.position.x, particle.position.y, particle)
     agents += particle
   }
@@ -43,7 +42,7 @@ class ParticlesModel(val nbParticles: Int,
   override def run(): Unit = {
     agents.foreach(agent => {
       val agentOldPosition = agent.position
-      agent.doIt()
+      agent.doIt(agentsShapes)
       environment.unmark(agentOldPosition.x, agentOldPosition.y)
       environment.mark(agent.position.x, agent.position.y, agent)
     })

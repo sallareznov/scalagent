@@ -20,6 +20,6 @@ trait Agent {
     * Performs an action, depending on the environment (mainly the position of other agents)
     *
     */
-  def doIt(): Unit
+  def doIt(agentsShapes: AgentsShapes): Unit
 
 }

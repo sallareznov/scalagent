@@ -28,7 +28,7 @@ class ParticlesView extends Application {
     val scene = new Scene(canvas, ParticlesCommand.envWidth, ParticlesCommand.envHeight)
     primaryStage.setScene(scene)
     primaryStage.show()
-    AgentsShapes.agentsShapes.values.foreach(shape => canvas.getChildren.add(shape))
+    model.agentsShapes.agentsToShapesAssociations.values.foreach(shape => canvas.getChildren.add(shape))
     val timelineLoop = new Timeline(new KeyFrame(Duration.millis(ParticlesCommand.speed), new EventHandler[ActionEvent]() {
       def handle(actionEvent: ActionEvent): Unit = {
         model.run()

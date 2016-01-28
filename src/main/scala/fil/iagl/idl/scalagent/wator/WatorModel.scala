@@ -18,11 +18,7 @@ class WatorModel(val width: Int,
                  val starve: Int) extends Model with Observable {
 
   val environment = Environment(width, height)
-  override var agents = mutable.HashSet[Agent]()
   val alreadyTakenPositions = ListBuffer[Position]()
-  // TODO for the graphs
-  var nbTunas = nTunas
-  var nbSharks = nSharks
 
   for (i <- 0 until nTunas) {
     val tuna = Tuna(tBreed, environment)
@@ -31,7 +27,7 @@ class WatorModel(val width: Int,
     alreadyTakenPositions += tuna.position
     val tunaShape = new Circle(2.5, Color.ROSYBROWN)
     tunaShape.relocate(tuna.position.x * 5, tuna.position.y * 5)
-    AgentsShapes.linkAgentToShape(tuna, tunaShape)
+    agentsShapes.linkAgentToShape(tuna, tunaShape)
     environment.mark(tuna.position.x, tuna.position.y, tuna)
     agents += tuna
   }
@@ -41,9 +37,9 @@ class WatorModel(val width: Int,
     shark.position = Position(Random.nextInt(width), Random.nextInt(height))
     // TODO taken positions
     alreadyTakenPositions += shark.position
-    val sharkShape = new Circle(2.5, Color.SKYBLUE)
+    val sharkShape = new Circle(2.5, Color.BLUE)
     sharkShape.relocate(shark.position.x * 5, shark.position.y * 5)
-    AgentsShapes.linkAgentToShape(shark, sharkShape)
+    agentsShapes.linkAgentToShape(shark, sharkShape)
     environment.mark(shark.position.x, shark.position.y, shark)
     agents += shark
   }
@@ -53,16 +49,15 @@ class WatorModel(val width: Int,
   override def run(): Unit = {
     agents.foreach(agent => {
       if (!agent.isVisited) {
-        agent.doIt()
+        agent.doIt(agentsShapes)
       }
     })
-    val newAgents = AgentsShapes.agentsShapes.keySet &~ agents
-    val deletedAgents = agents &~ AgentsShapes.agentsShapes.keySet
-    nbTunas += newAgents.size - deletedAgents.size
+    val newAgents = agentsShapes.agentsToShapesAssociations.keySet &~ agents
+    val deletedAgents = agents &~ agentsShapes.agentsToShapesAssociations.keySet
     agents = agents --= deletedAgents
     agents = agents ++= newAgents
-    val deletedShapes = AgentsShapes.trash
+    val deletedShapes = agentsShapes.trash
     notifyObservers(newAgents, deletedShapes)
-    AgentsShapes.emptyTrash()
+    agentsShapes.emptyTrash()
   }
 }

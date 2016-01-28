@@ -13,23 +13,25 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends W
   var starvationCounter = 0
 
   // TODO refactor heavily
-  override def doIt(): Unit = {
+  override def doIt(agentsShapes: AgentsShapes): Unit = {
     if (starvationCounter == starve) {
-      AgentsShapes.removeAgent(this)
+      agentsShapes.removeAgent(this)
       environment.unmark(position.x, position.y)
+      WatorMetricsData.decrementNSharks()
     }
     else {
       val nextPotentialTunaPosition = nextPositionOccupiedByATuna(environment)
       nextPotentialTunaPosition match {
         case Some(pos) => {
           val tunaToBeEaten = environment.getAgent(pos.x, pos.y).get
-          AgentsShapes.removeAgent(tunaToBeEaten)
+          agentsShapes.removeAgent(tunaToBeEaten)
           environment.unmark(tunaToBeEaten.position.x, tunaToBeEaten.position.y)
           tunaToBeEaten.isVisited = true
+          WatorMetricsData.decrementNTunas()
           val potentialChild = Shark(breed, starve, environment)
-          moveAndAimToReproduce(environment, potentialChild, Color.SKYBLUE)
+          moveAndAimToReproduce(environment, potentialChild, Color.BLUE, agentsShapes)
           position = pos
-          AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
+          agentsShapes.relocateShape(this, position.x * 5, position.y * 5)
           environment.mark(position.x, position.y, this)
           starvationCounter = 0
         }
@@ -38,9 +40,9 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends W
           nextPotentialFreePosition match {
             case Some(x) => {
               val potentialChild = Shark(breed, starve, environment)
-              moveAndAimToReproduce(environment, potentialChild, Color.SKYBLUE)
+              moveAndAimToReproduce(environment, potentialChild, Color.BLUE, agentsShapes)
               position = nextPotentialFreePosition.get
-              AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
+              agentsShapes.relocateShape(this, position.x * 5, position.y * 5)
               environment.mark(position.x, position.y, this)
               starvationCounter += 1
             }
