@@ -7,10 +7,9 @@ import fil.iagl.idl.scalagent.core._
 
 import scala.util.Random
 
-abstract class BreedingAgent(val breed: Int) extends Agent {
+abstract class WatorAgent(val breed: Int) extends Agent with Observable {
 
   var breedCounter = 0
-
 
   def nextFreePosition(environment: Environment): Option[Position] = {
     val list1 = Random.shuffle((-1).to(1))
@@ -41,5 +40,7 @@ abstract class BreedingAgent(val breed: Int) extends Agent {
       environment.unmark(position.x, position.y)
     }
   }
+
+
 
 }

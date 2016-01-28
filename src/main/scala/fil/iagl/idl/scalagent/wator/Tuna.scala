@@ -4,7 +4,7 @@ import javafx.scene.paint.Color
 
 import fil.iagl.idl.scalagent.core._
 
-class Tuna(breed: Int, val environment: Environment) extends BreedingAgent(breed) {
+class Tuna(breed: Int, val environment: Environment) extends WatorAgent(breed) {
 
   agentType = AgentType.TUNA
 
@@ -13,7 +13,7 @@ class Tuna(breed: Int, val environment: Environment) extends BreedingAgent(breed
     nextPotentialPosition match {
       case Some(x) => {
         val potentialChild = Tuna(breed, environment)
-        moveAndAimToReproduce(environment, potentialChild, Color.GREEN)
+        moveAndAimToReproduce(environment, potentialChild, Color.ROSYBROWN)
         position = nextPotentialPosition.get
         AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
         environment.mark(position.x, position.y, this)

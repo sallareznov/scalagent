@@ -6,7 +6,7 @@ import fil.iagl.idl.scalagent.core._
 
 import scala.util.Random
 
-class Shark(breed: Int, val starve: Int, val environment: Environment) extends BreedingAgent(breed) {
+class Shark(breed: Int, val starve: Int, val environment: Environment) extends WatorAgent(breed) {
 
   agentType = AgentType.SHARK
 
@@ -27,7 +27,7 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends B
           environment.unmark(tunaToBeEaten.position.x, tunaToBeEaten.position.y)
           tunaToBeEaten.isVisited = true
           val potentialChild = Shark(breed, starve, environment)
-          moveAndAimToReproduce(environment, potentialChild, Color.RED)
+          moveAndAimToReproduce(environment, potentialChild, Color.SKYBLUE)
           position = pos
           AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
           environment.mark(position.x, position.y, this)
@@ -38,7 +38,7 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends B
           nextPotentialFreePosition match {
             case Some(x) => {
               val potentialChild = Shark(breed, starve, environment)
-              moveAndAimToReproduce(environment, potentialChild, Color.RED)
+              moveAndAimToReproduce(environment, potentialChild, Color.SKYBLUE)
               position = nextPotentialFreePosition.get
               AgentsShapes.relocateShape(this, position.x * 5, position.y * 5)
               environment.mark(position.x, position.y, this)

@@ -4,7 +4,8 @@ import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
-import javafx.scene.layout.Pane
+import javafx.scene.chart.{AreaChart, NumberAxis, XYChart}
+import javafx.scene.layout.{BorderPane, Pane}
 import javafx.scene.shape.Shape
 import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.util.Duration
@@ -16,6 +17,8 @@ import scala.collection.mutable
 class WatorView extends Application with Observer {
 
   val canvas = new Pane()
+  var nTunas = 0
+  var nSharks = 0
 
   override def start(primaryStage: Stage): Unit = {
     val primScreenBounds = Screen.getPrimary.getVisualBounds
@@ -24,9 +27,24 @@ class WatorView extends Application with Observer {
       WatorCommand.height = primScreenBounds.getHeight.toInt
     }
     val model = new WatorModel(WatorCommand.width, WatorCommand.height, WatorCommand.nTunas, WatorCommand.nSharks, WatorCommand.tBreed, WatorCommand.sBreed, WatorCommand.starve)
+    nTunas = WatorCommand.nTunas
+    nSharks = WatorCommand.nSharks
     model.addObserver(this)
     primaryStage.setTitle("Wator")
-    val scene = new Scene(canvas, WatorCommand.width * 5, WatorCommand.height * 5)
+    val root = new BorderPane()
+    root.setCenter(canvas)
+    val xAxis = new NumberAxis()
+    val yAxis = new NumberAxis()
+    val areaChart = new AreaChart[Number, Number](xAxis, yAxis)
+    areaChart.setTitle("Time-dependent number of tunas and sharks")
+    val tunasSeries = new XYChart.Series[Number, Number]()
+    tunasSeries.setName("Tunas")
+    tunasSeries.getData.add(new XYChart.Data[Number, Number](0, WatorCommand.nTunas))
+    val sharksSeries = new XYChart.Series[Number, Number]()
+    sharksSeries.setName("Sharks")
+    sharksSeries.getData.add(new XYChart.Data[Number, Number](0, WatorCommand.nTunas))
+    root.setRight(areaChart)
+    val scene = new Scene(root, primScreenBounds.getWidth.toInt, primScreenBounds.getWidth.toInt)
     primaryStage.setScene(scene)
     primaryStage.show()
     primaryStage.setOnCloseRequest(new EventHandler[WindowEvent]() {
@@ -39,6 +57,16 @@ class WatorView extends Application with Observer {
       override def handle(actionEvent: ActionEvent): Unit = {
         model.run()
       }
+    }))
+    timelineLoop.setCycleCount(-1)
+    timelineLoop.play()
+    var elapsedSeconds = 1
+    val updateChartLoop = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler[ActionEvent]() {
+      override def handle(actionEvent: ActionEvent): Unit = {
+      //  areaChart.getData.add(new XYChart.Data[Number, Number](elapsedSeconds, model.)))
+      }
+
+
     }))
     timelineLoop.setCycleCount(-1)
     timelineLoop.play()

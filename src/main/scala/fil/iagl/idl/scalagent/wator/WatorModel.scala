@@ -29,7 +29,7 @@ class WatorModel(val width: Int,
     tuna.position = Position(Random.nextInt(width), Random.nextInt(height))
     // TODO taken positions
     alreadyTakenPositions += tuna.position
-    val tunaShape = new Circle(2.5, Color.GREEN)
+    val tunaShape = new Circle(2.5, Color.ROSYBROWN)
     tunaShape.relocate(tuna.position.x * 5, tuna.position.y * 5)
     AgentsShapes.linkAgentToShape(tuna, tunaShape)
     environment.mark(tuna.position.x, tuna.position.y, tuna)
@@ -41,7 +41,7 @@ class WatorModel(val width: Int,
     shark.position = Position(Random.nextInt(width), Random.nextInt(height))
     // TODO taken positions
     alreadyTakenPositions += shark.position
-    val sharkShape = new Circle(2.5, Color.RED)
+    val sharkShape = new Circle(2.5, Color.SKYBLUE)
     sharkShape.relocate(shark.position.x * 5, shark.position.y * 5)
     AgentsShapes.linkAgentToShape(shark, sharkShape)
     environment.mark(shark.position.x, shark.position.y, shark)
@@ -58,6 +58,7 @@ class WatorModel(val width: Int,
     })
     val newAgents = AgentsShapes.agentsShapes.keySet &~ agents
     val deletedAgents = agents &~ AgentsShapes.agentsShapes.keySet
+    nbTunas += newAgents.size - deletedAgents.size
     agents = agents --= deletedAgents
     agents = agents ++= newAgents
     val deletedShapes = AgentsShapes.trash
