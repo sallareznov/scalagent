@@ -3,9 +3,11 @@ package fil.iagl.idl.scalagent.wator
 import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
 import javafx.event.{ActionEvent, EventHandler}
+import javafx.geometry.Pos
 import javafx.scene.Scene
-import javafx.scene.chart.{LineChart, AreaChart, NumberAxis, XYChart}
-import javafx.scene.layout.{BorderPane, Pane}
+import javafx.scene.chart._
+import javafx.scene.control.SplitPane
+import javafx.scene.layout._
 import javafx.scene.shape.Shape
 import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.util.Duration
@@ -31,11 +33,17 @@ class WatorView extends Application with Observer {
 
   override def start(primaryStage: Stage): Unit = {
     primaryStage.setTitle("Wator")
-    val root = new BorderPane()
-    root.setCenter(canvas)
+    val root = new SplitPane()
     val xAxis = new NumberAxis()
     val yAxis = new NumberAxis()
     val lineChart = new LineChart[Number, Number](xAxis, yAxis)
+    val stackPane = new StackPane()
+
+
+
+    stackPane.getChildren.add(canvas)
+    StackPane.setAlignment(canvas, Pos.CENTER_LEFT)
+    root.getItems.addAll(stackPane, lineChart)
     lineChart.setTitle("Time-dependent number of tunas and sharks")
     lineChart.setCreateSymbols(false)
     tunasSeries.setName("Tunas")
@@ -43,7 +51,6 @@ class WatorView extends Application with Observer {
     sharksSeries.setName("Sharks")
     sharksSeries.getData.add(new XYChart.Data[Number, Number](0, WatorCommand.nSharks))
     lineChart.getData.addAll(tunasSeries, sharksSeries)
-    root.setRight(lineChart)
     val scene = new Scene(root, primScreenBounds.getWidth.toInt, primScreenBounds.getWidth.toInt)
     primaryStage.setScene(scene)
     primaryStage.show()
