@@ -2,3 +2,5 @@
 
 # scalagent
 Behaviour simulation, Multi-agent system approach using Scala/FX
+
+http://hawkweisman.me/notebook/programming,scala,ideas/2015/02/17/multi-agent-systems-using-the-actors-model/
