@@ -2,7 +2,7 @@ package fil.iagl.idl.scalagent.wator
 
 import org.backuity.clist._
 
-object WatorCommand extends Command(name = "wator", description = "blabla") {
+object WatorCommand extends Command(name = "wator", description = "wator is a simulation of the interaction over time of predator and prey in a small rectangular area") {
 
   // -> command arguments
   var width = opt[Int](name = "width", default = 125, description = "the width of the grid representing the environment")

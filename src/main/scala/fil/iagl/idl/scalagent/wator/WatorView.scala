@@ -3,7 +3,7 @@ package fil.iagl.idl.scalagent.wator
 import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
 import javafx.event.{ActionEvent, EventHandler}
-import javafx.geometry.Pos
+import javafx.geometry.{Orientation, Pos}
 import javafx.scene.Scene
 import javafx.scene.chart._
 import javafx.scene.control.SplitPane
@@ -38,7 +38,8 @@ class WatorView extends Application with Observer {
   override def start(primaryStage: Stage): Unit = {
     primaryStage.setTitle("Wator")
     val root = new SplitPane
-    val chartsContainer = new VBox()
+    val chartsContainer = new SplitPane
+    chartsContainer.setOrientation(Orientation.VERTICAL)
     val xAxisLineChart = new NumberAxis
     val yAxisLineChart = new NumberAxis
     xAxisLineChart.setLabel("Elapsed time")
@@ -54,11 +55,14 @@ class WatorView extends Application with Observer {
     sharksSeriesBarChart.setName("Sharks")
     barChart.getData.addAll(tunasSeriesBarChart, sharksSeriesBarChart)
 
-    val stackPane = new StackPane()
-    stackPane.getChildren.add(canvas)
-    StackPane.setAlignment(canvas, Pos.CENTER_LEFT)
-    chartsContainer.getChildren.addAll(lineChart, barChart)
-    root.getItems.addAll(stackPane, chartsContainer)
+    val box = new VBox
+    box.setAlignment(Pos.CENTER)
+    val canvasContainer = new HBox
+    canvasContainer.getChildren.add(canvas)
+    canvasContainer.setAlignment(Pos.CENTER)
+    box.getChildren.add(canvasContainer)
+    chartsContainer.getItems.addAll(lineChart, barChart)
+    root.getItems.addAll(box, chartsContainer)
     lineChart.setTitle("Time-dependent number of fishes")
     lineChart.setCreateSymbols(false)
     tunasSeriesLineChart.setName("Tunas")
@@ -104,8 +108,8 @@ class WatorView extends Application with Observer {
         val sharksMap = mutable.Map[Int, Int]()
         agents.foreach(agent => {
           agent.agentType match {
-            case AgentType.TUNA => tunasMap.put(agent.age, tunasMap.getOrElse(agent.age, 0) + 1)
-            case AgentType.SHARK => sharksMap.put(agent.age, sharksMap.getOrElse(agent.age, 0) + 1)
+            case AgentType.TUNA => tunasMap.put(agent.age / 20, tunasMap.getOrElse(agent.age / 20, 0) + 1)
+            case AgentType.SHARK => sharksMap.put(agent.age / 20, sharksMap.getOrElse(agent.age / 20, 0) + 1)
             case _ => ()
           }
         })
