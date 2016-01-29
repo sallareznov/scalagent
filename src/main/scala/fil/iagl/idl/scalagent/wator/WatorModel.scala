@@ -26,7 +26,7 @@ class WatorModel(val width: Int,
     // TODO taken positions
     alreadyTakenPositions += tuna.position
     val tunaShape = new Circle(2.5, Color.ROSYBROWN)
-    tunaShape.relocate(tuna.position.x * 5, tuna.position.y * 5)
+    tunaShape.relocate(tuna.position.x * 4, tuna.position.y * 4)
     agentsShapes.linkAgentToShape(tuna, tunaShape)
     environment.mark(tuna.position.x, tuna.position.y, tuna)
     agents += tuna
@@ -38,7 +38,7 @@ class WatorModel(val width: Int,
     // TODO taken positions
     alreadyTakenPositions += shark.position
     val sharkShape = new Circle(2.5, Color.BLUE)
-    sharkShape.relocate(shark.position.x * 5, shark.position.y * 5)
+    sharkShape.relocate(shark.position.x * 4, shark.position.y * 4)
     agentsShapes.linkAgentToShape(shark, sharkShape)
     environment.mark(shark.position.x, shark.position.y, shark)
     agents += shark

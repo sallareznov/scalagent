@@ -15,10 +15,13 @@ class Tuna(breed: Int, val environment: Environment) extends WatorAgent(breed) {
         val potentialChild = Tuna(breed, environment)
         moveAndAimToReproduce(environment, potentialChild, Color.ROSYBROWN, agentsShapes)
         position = nextPotentialPosition.get
-        agentsShapes.relocateShape(this, position.x * 5, position.y * 5)
+        agentsShapes.relocateShape(this, position.x * 4, position.y * 4)
         environment.mark(position.x, position.y, this)
       }
-      case None => breedCounter += 1
+      case None => {
+        breedCounter += 1
+        age += 1
+      }
     }
 
   }

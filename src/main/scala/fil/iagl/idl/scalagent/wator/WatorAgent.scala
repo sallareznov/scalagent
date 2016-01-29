@@ -10,6 +10,7 @@ import scala.util.Random
 abstract class WatorAgent(val breed: Int) extends Agent with Observable {
 
   var breedCounter = 0
+  var age = 0
 
   def nextFreePosition(environment: Environment): Option[Position] = {
     val list1 = Random.shuffle((-1).to(1))
@@ -30,7 +31,7 @@ abstract class WatorAgent(val breed: Int) extends Agent with Observable {
     if (breedCounter == breed) {
       potentialChild.position = Position(position.x, position.y)
       val childShape = new Circle(2.5, color)
-      childShape.relocate(position.x * 5, position.y * 5)
+      childShape.relocate(position.x * 4, position.y * 4)
       agentsShapes.linkAgentToShape(potentialChild, childShape)
       environment.mark(potentialChild.position.x, potentialChild.position.y, potentialChild)
       if (agentType == AgentType.TUNA) WatorMetricsData.incrementNTunas() else WatorMetricsData.incrementNSharks()
@@ -40,6 +41,7 @@ abstract class WatorAgent(val breed: Int) extends Agent with Observable {
       breedCounter += 1
       environment.unmark(position.x, position.y)
     }
+    age += 1
   }
 
 
