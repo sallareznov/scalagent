@@ -12,10 +12,9 @@ import javafx.scene.shape.Shape
 import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.util.Duration
 
-import fil.iagl.idl.scalagent.core.{AgentType, Agent, Observer}
+import fil.iagl.idl.scalagent.core.{Agent, AgentType, Observer}
 
-import scala.collection.{mutable, SortedMap}
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable
 
 class WatorView extends Application with Observer {
 

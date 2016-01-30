@@ -4,7 +4,6 @@ import javafx.scene.shape.Circle
 
 import fil.iagl.idl.scalagent.core._
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 

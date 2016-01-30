@@ -1,11 +1,10 @@
 package fil.iagl.idl.scalagent.wator
 
 import javafx.scene.paint.Color
-import javafx.scene.shape.{Circle, Rectangle}
+import javafx.scene.shape.Circle
 
 import fil.iagl.idl.scalagent.core._
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
