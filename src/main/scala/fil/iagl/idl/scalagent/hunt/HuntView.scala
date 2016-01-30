@@ -8,8 +8,6 @@ import javafx.scene.layout.Pane
 import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 
-import fil.iagl.idl.scalagent.particles.ParticlesCommand
-
 class HuntView extends Application {
 
   val canvas = new Pane()
@@ -22,11 +20,11 @@ class HuntView extends Application {
     }
     val model = new HuntModel(HuntCommand.nbHunters, HuntCommand.nbObstacles, HuntCommand.envHeight, HuntCommand.envWidth, HuntCommand.agentSize)
     primaryStage.setTitle("Hunting")
-    val scene = new Scene(canvas, ParticlesCommand.envWidth, ParticlesCommand.envHeight)
+    val scene = new Scene(canvas, HuntCommand.envWidth, HuntCommand.envHeight)
     primaryStage.setScene(scene)
     primaryStage.show()
     model.agentsShapes.agentsToShapesAssociations.values.foreach(shape => canvas.getChildren.add(shape))
-    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(ParticlesCommand.speed), new EventHandler[ActionEvent]() {
+    val timelineLoop = new Timeline(new KeyFrame(Duration.millis(HuntCommand.speed), new EventHandler[ActionEvent]() {
       def handle(actionEvent: ActionEvent): Unit = {
         model.run()
       }
