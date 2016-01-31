@@ -1,5 +1,7 @@
 package fil.iagl.idl.scalagent.hunt
 
+import javafx.event.EventHandler
+import javafx.scene.input.{KeyCode, KeyEvent}
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 
@@ -45,6 +47,18 @@ class HuntModel(val nbHunters: Int, val nbObstacles: Int, envHeight: Int, envWid
   // TODO taken positions
   alreadyTakenPositions += prey.position
   val preyShape = new Circle(agentSize, Color.RED)
+  preyShape.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler[KeyEvent] {
+    override def handle(event: KeyEvent): Unit = {
+      println("handling")
+      event.getCode match {
+        case KeyCode.UP => prey.direction = Direction.NORTH
+        case KeyCode.DOWN => prey.direction = Direction.SOUTH
+        case KeyCode.RIGHT => prey.direction = Direction.EAST
+        case KeyCode.LEFT => prey.direction = Direction.WEST
+        case _ =>
+      }
+    }
+  })
   preyShape.relocate(prey.position.x, prey.position.y)
   agentsShapes.linkAgentToShape(prey, preyShape)
   environment.mark(prey.position.x, prey.position.y, prey)
