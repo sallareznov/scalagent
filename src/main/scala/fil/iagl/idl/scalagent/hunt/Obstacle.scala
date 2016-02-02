@@ -2,9 +2,6 @@ package fil.iagl.idl.scalagent.hunt
 
 import fil.iagl.idl.scalagent.core._
 
-/**
-  * Created by anis on 1/30/16.
-  */
 class Obstacle(environment: Environment) extends Agent{
   agentType = AgentType.OBSTACLE
 
