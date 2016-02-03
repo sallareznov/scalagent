@@ -1,5 +1,7 @@
 package fil.iagl.idl.scalagent.hunt
 
+import javafx.application.Platform
+
 import fil.iagl.idl.scalagent.core._
 
 import scala.util.Random
@@ -25,8 +27,7 @@ class Predator(val environment: Environment, val dijkstraPathFinder: DijkstraPat
         }
       }
       else if (environment.getAgent(neighbor.x, neighbor.y).get.agentType == AgentType.PREY) {
-        // TODO end
-        println("End")
+        Platform.exit()
       }
     }))
     position = optimalNextPosition.get
