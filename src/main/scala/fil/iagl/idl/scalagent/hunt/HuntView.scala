@@ -26,7 +26,12 @@ class HuntView extends Application {
     primaryStage.setTitle("Hunt")
     primaryStage.setScene(scene)
     primaryStage.show()
+
+    // TODO labels drawing takes too much time... Is there another solution?
+    //DijkstraDistancesLabels.initLabels(HuntCommand.envWidth, HuntCommand.envHeight)
+    //DijkstraDistancesLabels.labels.get.foreach(_.foreach(label => canvas.getChildren.add(label)))
     model.agentsShapes.agentsToShapesAssociations.values.foreach(shape => canvas.getChildren.add(shape))
+    // TODO use the controller
     scene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler[KeyEvent] {
       override def handle(event: KeyEvent): Unit = {
         event.getCode match {
