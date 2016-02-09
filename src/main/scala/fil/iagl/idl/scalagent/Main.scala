@@ -1,8 +1,11 @@
 package fil.iagl.idl.scalagent
 
-import fil.iagl.idl.scalagent.hunt.{HuntView, HuntCommand}
-import fil.iagl.idl.scalagent.particles.{ParticlesCommand, ParticlesView}
-import fil.iagl.idl.scalagent.wator.{WatorView, WatorCommand}
+import fil.iagl.idl.scalagent.hunt.util.HuntCommandOptions
+import fil.iagl.idl.scalagent.hunt.view.HuntView
+import fil.iagl.idl.scalagent.particles.util.ParticlesCommandOptions
+import fil.iagl.idl.scalagent.particles.view.ParticlesView
+import fil.iagl.idl.scalagent.wator.util.WatorCommandOptions
+import fil.iagl.idl.scalagent.wator.view.WatorView
 import org.backuity.clist.Cli
 
 /**
@@ -14,10 +17,10 @@ import org.backuity.clist.Cli
 object Main {
 
   def main (args: Array[String]): Unit = {
-    Cli.parse(args).withProgramName("sma").withCommands(ParticlesCommand, WatorCommand, HuntCommand) match {
-      case Some(ParticlesCommand) => ParticlesView.main(args)
-      case Some(WatorCommand) => WatorView.main(args)
-      case Some(HuntCommand) => HuntView.main(args)
+    Cli.parse(args).withProgramName("sma").withCommands(ParticlesCommandOptions, WatorCommandOptions, HuntCommandOptions) match {
+      case Some(ParticlesCommandOptions) => ParticlesView.main(args)
+      case Some(WatorCommandOptions) => WatorView.main(args)
+      case Some(HuntCommandOptions) => HuntView.main(args)
       case _ => ()
     }
   }
