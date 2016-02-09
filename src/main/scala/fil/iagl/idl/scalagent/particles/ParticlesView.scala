@@ -8,11 +8,9 @@ import javafx.scene.layout.Pane
 import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 
-import fil.iagl.idl.scalagent.core.AgentsShapes
-
-// TODO Evolutionary curve of the execution time of the application depending on the number of particles
-// TODO - without any interaction between them
-// TODO - with an interaction between them
+/**
+  * View of the particles application
+  */
 class ParticlesView extends Application {
 
   val canvas = new Pane()
@@ -23,9 +21,9 @@ class ParticlesView extends Application {
       ParticlesCommand.envWidth = primScreenBounds.getWidth.toInt
       ParticlesCommand.envHeight = primScreenBounds.getHeight.toInt
     }
-    val model = new ParticlesModel(ParticlesCommand.nbParticles, ParticlesCommand.envWidth, ParticlesCommand.envHeight, ParticlesCommand.agentSize, ParticlesCommand.speed, ParticlesCommand.toroidal, ParticlesCommand.equity)
+    val model = new ParticlesModel(ParticlesCommand.nbParticles, ParticlesCommand.envWidth, ParticlesCommand.envHeight, ParticlesCommand.agentSize, ParticlesCommand.toroidal, ParticlesCommand.equity)
     primaryStage.setTitle("Particles")
-    val scene = new Scene(canvas, ParticlesCommand.envWidth, ParticlesCommand.envHeight)
+    val scene = new Scene(canvas, ParticlesCommand.envWidth * 5, ParticlesCommand.envHeight * 5)
     primaryStage.setScene(scene)
     primaryStage.show()
     model.agentsShapes.agentsToShapesAssociations.values.foreach(shape => canvas.getChildren.add(shape))

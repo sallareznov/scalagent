@@ -5,8 +5,14 @@ import fil.iagl.idl.scalagent.core.{Environment, Position}
 import scala.collection.mutable
 import scala.util.Random
 
+/**
+  * A path finder using the Dijkstra algorithm
+  */
 class DijkstraPathFinder {
 
+  /**
+    * the current Dijkstra distances
+    */
   var currentDijkstraDistancesOption: Option[Array[Array[Int]]] = None
 
   def updateDijkstraDistances(environment: Environment, agentPosition: Position): Unit = {
@@ -30,9 +36,10 @@ class DijkstraPathFinder {
       // TODO obstacle
       if (currentDijkstraDistancesOption.get(neighbor.x)(neighbor.y) > currentDijkstraDistancesOption.get(head.x)(head.y) + 1 || currentDijkstraDistancesOption.get(neighbor.x)(neighbor.y) == -1) {
         currentDijkstraDistancesOption.get(neighbor.x)(neighbor.y) = currentDijkstraDistancesOption.get(head.x)(head.y) + 1
+        //DijkstraDistancesLabels.changeLabel(neighbor.x, neighbor.y, currentDijkstraDistancesOption.get(neighbor.x)(neighbor.y))
         queue.enqueue(neighbor)
       }
-    }))
+   }))
   }
 
 }

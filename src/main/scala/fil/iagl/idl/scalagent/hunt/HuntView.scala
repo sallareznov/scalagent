@@ -4,6 +4,7 @@ import javafx.animation.{KeyFrame, Timeline}
 import javafx.application.Application
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.Scene
+import javafx.scene.canvas.Canvas
 import javafx.scene.input.{KeyCode, KeyEvent}
 import javafx.scene.layout.Pane
 import javafx.stage.{Screen, Stage}
@@ -19,7 +20,7 @@ class HuntView extends Application {
     HuntCommand.envHeight = primScreenBounds.getHeight.toInt
   }
   val canvas = new Pane()
-  val scene = new Scene(canvas, HuntCommand.envWidth, HuntCommand.envHeight)
+  val scene = new Scene(canvas, HuntCommand.envWidth * 5, HuntCommand.envHeight * 5)
 
   override def start(primaryStage: Stage): Unit = {
     val model = new HuntModel(HuntCommand.nbHunters, HuntCommand.nbObstacles, HuntCommand.envHeight, HuntCommand.envWidth, HuntCommand.agentSize)

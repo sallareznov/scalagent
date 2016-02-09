@@ -9,13 +9,16 @@ import javafx.scene.chart._
 import javafx.scene.control.SplitPane
 import javafx.scene.layout._
 import javafx.scene.shape.Shape
-import javafx.stage.{Screen, Stage, WindowEvent}
+import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 
 import fil.iagl.idl.scalagent.core.{Agent, AgentType, Observer}
 
 import scala.collection.mutable
 
+/**
+  * View of the wator application
+  */
 class WatorView extends Application with Observer {
 
   val canvas = new Pane()
@@ -69,14 +72,9 @@ class WatorView extends Application with Observer {
     sharksSeriesLineChart.setName("Sharks")
     sharksSeriesLineChart.getData.add(new XYChart.Data[Number, Number](0, WatorCommand.nSharks))
     lineChart.getData.addAll(tunasSeriesLineChart, sharksSeriesLineChart)
-    val scene = new Scene(root, primScreenBounds.getWidth.toInt, primScreenBounds.getWidth.toInt)
+    val scene = new Scene(root, primScreenBounds.getWidth, primScreenBounds.getHeight)
     primaryStage.setScene(scene)
     primaryStage.show()
-    primaryStage.setOnCloseRequest(new EventHandler[WindowEvent]() {
-      override def handle(event: WindowEvent): Unit = {
-        // TODO get the number of laps every agent lasts and write it on a file (for the age pyramid)
-      }
-    })
     val agentsShapes = model.agentsShapes
     agentsShapes.agentsToShapesAssociations.values.foreach(shape => canvas.getChildren.add(shape))
     val timelineLoop = new Timeline(new KeyFrame(Duration.millis(WatorCommand.speed), new EventHandler[ActionEvent]() {
@@ -89,7 +87,6 @@ class WatorView extends Application with Observer {
     var elapsedSeconds = 1
     val updateChartLoop = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler[ActionEvent]() {
       override def handle(actionEvent: ActionEvent): Unit = {
-        println(elapsedSeconds + " | " + "t : " + WatorMetricsData.nTunas + ", " + "s : " + WatorMetricsData.nSharks)
         tunasSeriesLineChart.getData.add(new XYChart.Data[Number, Number](elapsedSeconds, WatorMetricsData.nTunas))
         sharksSeriesLineChart.getData.add(new XYChart.Data[Number, Number](elapsedSeconds, WatorMetricsData.nSharks))
         elapsedSeconds += 1
@@ -124,6 +121,11 @@ class WatorView extends Application with Observer {
     updateBarLoop.play()
   }
 
+  /**
+    * updates the view following a lap by adding the new agents and deleting the dead ones from the view
+    * @param newAgents the agents to add to the view
+    * @param deletedShapes the shapes to delete from the view
+    */
   override def update(newAgents: scala.collection.Set[Agent], deletedShapes: mutable.HashSet[Shape]): Unit = {
     newAgents.foreach(newAgent => canvas.getChildren.add(model.agentsShapes.agentsToShapesAssociations.get(newAgent).get))
     deletedShapes.foreach(shape => canvas.getChildren.remove(shape))

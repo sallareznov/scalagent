@@ -8,9 +8,9 @@ import scala.util.Random
 
 class Predator(val environment: Environment, val dijkstraPathFinder: DijkstraPathFinder) extends Agent {
 
-  agentType = AgentType.HUNTER
+  agentType = AgentType.PREDATOR
 
-  override def doIt(agentsShapes: AgentsShapes): Unit = {
+  override def doIt(neighborhood: Neighborhood, agentsShapes: AgentsShapes): Unit = {
     val list1 = Random.shuffle((-1).to(1))
     val list2 = Random.shuffle((-1).to(1))
     var lowestDijkstraValue = Int.MaxValue
@@ -27,11 +27,12 @@ class Predator(val environment: Environment, val dijkstraPathFinder: DijkstraPat
         }
       }
       else if (environment.getAgent(neighbor.x, neighbor.y).get.agentType == AgentType.PREY) {
+        println("GAME OVER")
         Platform.exit()
       }
     }))
     position = optimalNextPosition.get
-    agentsShapes.relocateShape(this, position.x, position.y)
+    agentsShapes.relocateShape(this, position.x * 5, position.y * 5)
   }
 
 }

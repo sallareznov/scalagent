@@ -7,33 +7,41 @@ import fil.iagl.idl.scalagent.core._
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
+/**
+  * The model of the particles environment in a MVC paradigm
+  * @constructor constructs a new ParticlesModel with `nbParticles`, `envWidth`, `envHeight`, `agentSize`, `speed`, `toroidal` and `equity`
+  * @param nbParticles the number of particles in the environment
+  * @param envWidth the width of the environment
+  * @param envHeight the height of the environment
+  * @param agentSize the initial number of tunas in the environment
+  * @param toroidal `true` if the environment is toroidal
+  * @param equity `true` the order of the agents' deciding is random
+  */
 class ParticlesModel(val nbParticles: Int,
                      val envWidth: Int,
                      val envHeight: Int,
                      val agentSize: Double,
-                     val speed: Int,
                      val toroidal: Boolean,
                      val equity: Boolean
                     ) extends Model {
 
   val environment = Environment(envWidth, envHeight)
 
-  val alreadyTakenPositions = ListBuffer[Position]()
+  override def init(): Unit = {
+    for (i <- 0 until nbParticles) {
+      val particle = Particle(toroidal, environment)
+      particle.position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
+      val particleShape = new Circle(agentSize, ParticlesColorsGenerator.randomColor())
+      particleShape.relocate(particle.position.x * 5, particle.position.y * 5)
+      agentsShapes.linkAgentToShape(particle, particleShape)
+      environment.mark(particle.position.x, particle.position.y, particle)
+      agents += particle
+    }
 
-  for (i <- 0 until nbParticles) {
-    val particle = Particle(toroidal, environment)
-    particle.position = Position(Random.nextInt(envWidth), Random.nextInt(envHeight))
-    // TODO taken positions
-    alreadyTakenPositions += particle.position
-    val particleShape = new Circle(agentSize, ParticlesColorsGenerator.randomColor())
-    particleShape.relocate(particle.position.x, particle.position.y)
-    agentsShapes.linkAgentToShape(particle, particleShape)
-    environment.mark(particle.position.x, particle.position.y, particle)
-    agents += particle
+    if (equity)
+      agents = Random.shuffle(agents)
   }
 
-  if (equity)
-    agents = Random.shuffle(agents)
 
   /**
     * runs the model (simulates the agents' moves)
@@ -41,7 +49,7 @@ class ParticlesModel(val nbParticles: Int,
   override def run(): Unit = {
     agents.foreach(agent => {
       val agentOldPosition = agent.position
-      agent.doIt(agentsShapes)
+      agent.doIt(new MooreNeighborhood(), agentsShapes)
       environment.unmark(agentOldPosition.x, agentOldPosition.y)
       environment.mark(agent.position.x, agent.position.y, agent)
     })

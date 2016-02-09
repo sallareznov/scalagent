@@ -9,7 +9,7 @@ class Obstacle(environment: Environment) extends Agent{
     * Performs an action, depending on the environment (mainly the position of other agents)
     *
     */
-  override def doIt(agentsShapes: AgentsShapes): Unit = {}
+  override def doIt(neighborhood: Neighborhood, agentsShapes: AgentsShapes): Unit = {}
 }
 
 object Obstacle {

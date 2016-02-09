@@ -10,7 +10,6 @@ class HuntController(model: HuntModel, view: HuntView) {
   def installKeyPressedEventHandler(): Unit = {
     view.scene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler[KeyEvent] {
       override def handle(event: KeyEvent): Unit = {
-        println("HANDLING")
         event.getCode match {
           case KeyCode.UP => model.prey.direction = Direction.NORTH
           case KeyCode.DOWN => model.prey.direction = Direction.SOUTH

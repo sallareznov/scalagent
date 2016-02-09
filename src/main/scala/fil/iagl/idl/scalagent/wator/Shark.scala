@@ -12,8 +12,7 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends W
 
   var starvationCounter = 0
 
-  // TODO refactor heavily
-  override def doIt(agentsShapes: AgentsShapes): Unit = {
+  override def doIt(neighborhood: Neighborhood, agentsShapes: AgentsShapes): Unit = {
     if (starvationCounter == starve) {
       agentsShapes.removeAgent(this)
       environment.unmark(position.x, position.y)
@@ -74,6 +73,9 @@ class Shark(breed: Int, val starve: Int, val environment: Environment) extends W
   }
 }
 
+/**
+  * Companion object
+  */
 object Shark {
 
   def apply(breed: Int, starve: Int, environment: Environment) = new Shark(breed, starve, environment)

@@ -9,10 +9,10 @@ class Prey(environment: Environment) extends Agent {
   var stepX = 0
   var stepY = 0
 
-  override def doIt(agentsShapes: AgentsShapes): Unit = {
+  override def doIt(neighborhood: Neighborhood, agentsShapes: AgentsShapes): Unit = {
     getDirection()
     position = getNextPosition(environment)
-    agentsShapes.relocateShape(this, position.x, position.y)
+    agentsShapes.relocateShape(this, position.x * 5, position.y * 5)
   }
 
   def getDirection(): Unit = {
@@ -37,13 +37,11 @@ class Prey(environment: Environment) extends Agent {
     val newX = if ((position.x + stepX) >= 0) position.x + stepX else (position.x + stepX) + environment.width
     val newY = if ((position.y + stepY) >= 0) position.y + stepY else (position.y + stepY) + environment.height
     val nextPosition = Position(newX % environment.width, newY % environment.height)
-    if (positionIsEmpty(nextPosition, environment))
+    if (environment.isFree(nextPosition.x, nextPosition.y))
       nextPosition
     else
       position
   }
-
-  def positionIsEmpty(newPosition: Position, environment: Environment): Boolean = environment.getAgent(newPosition.x, newPosition.y).isEmpty
 
 }
 
