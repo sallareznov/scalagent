@@ -24,6 +24,7 @@ class ParticlesView extends Application {
       ParticlesCommandOptions.envHeight = primScreenBounds.getHeight.toInt
     }
     val model = new ParticlesModel(ParticlesCommandOptions.nbParticles, ParticlesCommandOptions.envWidth, ParticlesCommandOptions.envHeight, ParticlesCommandOptions.agentSize, ParticlesCommandOptions.toroidal, ParticlesCommandOptions.equity)
+    model.init()
     primaryStage.setTitle("Particles")
     val scene = new Scene(canvas, ParticlesCommandOptions.envWidth * 5, ParticlesCommandOptions.envHeight * 5)
     primaryStage.setScene(scene)

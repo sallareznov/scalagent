@@ -67,6 +67,6 @@ object ParticlesModel {
             agentSize: Double,
             speed: Int,
             toroidal: Boolean,
-            equity: Boolean) = new ParticlesModel(nbParticles, envWidth, envHeight, agentSize, speed, toroidal, equity)
+            equity: Boolean) = new ParticlesModel(nbParticles, envWidth, envHeight, agentSize, toroidal, equity)
 
 }

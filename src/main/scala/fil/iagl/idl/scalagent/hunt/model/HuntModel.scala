@@ -3,9 +3,8 @@ package fil.iagl.idl.scalagent.hunt.model
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 
-import fil.iagl.idl.scalagent.core._
-import fil.iagl.idl.scalagent.core.model.{Model, Environment}
-import fil.iagl.idl.scalagent.core.util.{Position, MooreNeighborhood}
+import fil.iagl.idl.scalagent.core.model.{Environment, Model}
+import fil.iagl.idl.scalagent.core.util.{MooreNeighborhood, Position}
 import fil.iagl.idl.scalagent.hunt.util.DijkstraPathFinder
 
 import scala.collection.mutable.ListBuffer

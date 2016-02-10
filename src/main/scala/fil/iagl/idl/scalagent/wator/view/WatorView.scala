@@ -13,11 +13,9 @@ import javafx.stage.{Screen, Stage}
 import javafx.util.Duration
 
 import fil.iagl.idl.scalagent.core.model.Agent
-import fil.iagl.idl.scalagent.core.Observer
-import fil.iagl.idl.scalagent.core.util.{Observer, AgentType}
+import fil.iagl.idl.scalagent.core.util.{AgentType, Observer}
 import fil.iagl.idl.scalagent.wator.model.{WatorAgent, WatorModel}
-import fil.iagl.idl.scalagent.wator.WatorMetricsData
-import fil.iagl.idl.scalagent.wator.util.{WatorMetricsData, WatorCommandOptions}
+import fil.iagl.idl.scalagent.wator.util.{WatorCommandOptions, WatorMetricsData}
 
 import scala.collection.mutable
 
@@ -33,6 +31,7 @@ class WatorView extends Application with Observer {
     WatorCommandOptions.height = primScreenBounds.getHeight.toInt
   }
   val model = new WatorModel(WatorCommandOptions.width, WatorCommandOptions.height, WatorCommandOptions.nTunas, WatorCommandOptions.nSharks, WatorCommandOptions.tBreed, WatorCommandOptions.sBreed, WatorCommandOptions.starve)
+  model.init()
   model.addObserver(this)
   val tunasSeriesLineChart = new XYChart.Series[Number, Number]()
   val sharksSeriesLineChart = new XYChart.Series[Number, Number]()

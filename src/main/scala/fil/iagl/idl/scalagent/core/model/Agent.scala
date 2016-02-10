@@ -1,7 +1,6 @@
 package fil.iagl.idl.scalagent.core.model
 
-import fil.iagl.idl.scalagent.core.util.{Position, Neighborhood, AgentType, AgentsShapes}
-import fil.iagl.idl.scalagent.core.Position
+import fil.iagl.idl.scalagent.core.util.{AgentType, AgentsShapes, Neighborhood, Position}
 
 /**
   * An agent is an entity capable of acting in an environment [[Environment]]

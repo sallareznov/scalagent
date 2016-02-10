@@ -24,6 +24,7 @@ class HuntView extends Application {
 
   override def start(primaryStage: Stage): Unit = {
     val model = new HuntModel(HuntCommandOptions.nbHunters, HuntCommandOptions.nbObstacles, HuntCommandOptions.envHeight, HuntCommandOptions.envWidth, HuntCommandOptions.agentSize)
+    model.init()
     primaryStage.setTitle("Hunt")
     primaryStage.setScene(scene)
     primaryStage.show()
