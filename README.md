@@ -3,8 +3,16 @@
 # scalagent
 Behaviour simulation, Multi-agent system approach using Scala/FX
 
-http://hawkweisman.me/notebook/programming,scala,ideas/2015/02/17/multi-agent-systems-using-the-actors-model/
-
-![usage-demo](usage.png)
-
 Full report at : https://github.com/sallareznov/scalagent/tree/master/report.pdf
+
+![usage](images/usage.png)
+
+### UML
+
+![overview](images/overview.png)
+
+![particles-diagram](images/particles_diagram.png)
+
+![wator-diagram](images/wator_diagram.png)
+
+![hunt-diagram](images/hunt_diagram.png)
